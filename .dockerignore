@@ -1,0 +1,31 @@
+# Basic ignores
+**/target/*
+**/build/*
+**/.vscode
+**/.DS_Store
+
+# Editor specific
+.idea/
+
+.dockerignore
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.old
+
+# Editor directories and files
+.vscode/
+*.code-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+.env

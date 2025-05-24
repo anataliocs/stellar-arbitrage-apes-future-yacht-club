@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css"
+    >
+    <title>SnapChain</title>
+  </head>
+  <body>
+    <header class="container-fluid pico-background-pumpkin-50">
+      <nav>
+        <ul>
+          <li><strong>SnapChain</strong></li>
+        </ul>
+        <ul id="connect-buttons">
+        </ul>
+      </nav>
+    </header>
+    <main class="container">
+      <div id="chit-chat"></div>
+      <div id="scroll-anchor"></div>
+    </main>
+    <footer class="container-fluid pico-background-pumpkin-50">
+      <form id="message-form">
+        <textarea placeholder="type your message here..." id="message" rows="4"></textarea>
+        <button type="submit" id="sendButton" name="sendButton">Send Message</button>
+      </form>
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

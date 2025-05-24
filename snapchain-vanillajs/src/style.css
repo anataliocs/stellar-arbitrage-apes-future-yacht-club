@@ -1,0 +1,60 @@
+:root {
+    --pico-color-pumpkin-950: #180f04;
+    --pico-color-pumpkin-900: #271805;
+    --pico-color-pumpkin-850: #372004;
+    --pico-color-pumpkin-800: #482802;
+    --pico-color-pumpkin-750: #593100;
+    --pico-color-pumpkin-700: #693a00;
+    --pico-color-pumpkin-650: #7a4400;
+    --pico-color-pumpkin-600: #8b4f00;
+    --pico-color-pumpkin-550: #9c5900;
+    --pico-color-pumpkin-500: #ad6400;
+    --pico-color-pumpkin-450: #bf6e00;
+    --pico-color-pumpkin-400: #d27a01;
+    --pico-color-pumpkin-350: #e48500;
+    --pico-color-pumpkin-300: #ff9500;
+    --pico-color-pumpkin-250: #ffa23a;
+    --pico-color-pumpkin-200: #feb670;
+    --pico-color-pumpkin-150: #fcca9b;
+    --pico-color-pumpkin-100: #fcdcc1;
+    --pico-color-pumpkin-50: #fceee3;
+    --pico-color-pumpkin: #ff9500;
+}
+
+.pico-background-pumpkin-50 {
+    background-color:var(--pico-color-pumpkin-50);
+}
+
+body {
+    display: flex;
+    min-height: 100dvh;
+    flex-direction: column;
+}
+
+#sendButton {
+    margin-bottom: 0;
+}
+body > main {
+    flex: 1 0 auto;
+}
+
+body > footer {
+    --webkit-position: sticky;
+    position: sticky;
+    bottom: 0;
+}
+
+body > header {
+    --webkit-position: sticky;
+    position: sticky;
+    top: 0;
+}
+
+body > main * {
+    overflow-anchor: none;
+}
+
+#scroll-anchor {
+    overflow-anchor: auto;
+    height: 1px;
+}
