@@ -6,10 +6,8 @@ publish = false
 authors = ["AnonVeryRecognizableGuyWithPurpleHair"]
 repository = "github.com/anataliocs/stellar-arbitrage-apes-future-yacht-club"
 
-
 [lib]
 crate-type = ["lib", "cdylib"]
-workspace = true
 
 [dependencies]
 soroban-sdk = { workspace = true }

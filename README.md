@@ -11,15 +11,13 @@ Built with the new Open Zeppelin Wizard
 
 ## ✨ Stellar Smart Contract Arbitrage Apes Demo
 
-Secure, passkey-powered, chat messages.
-Message content is persisted in temporary contract storage.
+Open Zeppelin based NFT `NonFungibleBurnable` for token gating access to APIs including OZ Monitor.
 
 **Path:** `contracts/arbitrage-apes`
 
 ### Build and Deploy your Smart Contract
 
 [Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started) is step one!
-
 For support, visit our [Discord](https://discord.gg/stellardev).
 
 **Deploy Arbitrage Apes Smart Contract:**
@@ -44,8 +42,13 @@ echo SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin > .env && echo "expo
 
 **Build contract:**
 
+- Build contract to standard location:  `target/wasm32v1-none/release/arbitrage_apes.wasm`
+- Using release profile
+- Use `printenv CARGO_BUILD_RUSTFLAGS` to view build parameters
+- Sets metadata on the contract base `NonFungibleBurnable`
+
 ```bash
-stellar contract build --profile release
+stellar contract build --verbose --profile release --meta contract-base=NonFungibleBurnable
 ```
 
 **Deploy Contract and Update Env**
