@@ -1,0 +1,21 @@
+[package]
+name = "arbitrage-apes"
+version = "0.0.1"
+edition = "2021"
+publish = false
+authors = ["AnonVeryRecognizableGuyWithPurpleHair"]
+repository = "github.com/anataliocs/stellar-arbitrage-apes-future-yacht-club"
+
+
+[lib]
+crate-type = ["lib", "cdylib"]
+workspace = true
+
+[dependencies]
+soroban-sdk = { workspace = true }
+stellar-non-fungible = { workspace = true }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
+
+

@@ -1,10 +1,4 @@
-# Stellar Smart Contract Demo: Snapchain
-
-
-**Consensus 2025: Stellar Toronto Builder Summit - Snapchain Smart Contract Walkthrough**
-<a href="https://www.youtube.com/watch?v=TB7ORkbxcpQ">
-	<img width="873" alt="image" src="https://github.com/user-attachments/assets/22fb8e02-3cfd-4c30-94df-e37e0af193e9" />
-</a>
+# Arbitrage Apes Open Zeppelin Soroban Smart Contract
 
 Learn how to build smart contracts on the ✨ [Stellar Network](https://developers.stellar.org/)
 with [smart wallets](https://developers.stellar.org/docs/build/apps/smart-wallets)
@@ -16,7 +10,8 @@ With a super-light front-end built with **Vite**.
 **🛠️ Dev Tools**
 
 - 💻 [Stellar CLI](https://developers.stellar.org/docs/tools/cli/install-cli)
-	- Featuring: [Generating Bindings](https://developers.stellar.org/docs/tools/cli/stellar-cli#stellar-contract-bindings)
+	-
+	Featuring: [Generating Bindings](https://developers.stellar.org/docs/tools/cli/stellar-cli#stellar-contract-bindings)
 - ⚙️ [Stellar Javascript SDK](https://developers.stellar.org/docs/tools/sdks/client-sdks#javascript-sdk)
 	- Featuring: [Stellar RPC Server](https://stellar.github.io/js-stellar-sdk/module-rpc.Server.html)
 - 🔐 [Passkey Kit](https://github.com/kalepail/passkey-kit) - Seamless authentication
@@ -139,28 +134,30 @@ pub struct ChatMessage {
 }
 ```
 
-- [Structs in Rust](https://doc.rust-lang.org/book/ch05-01-defining-structs.html) define a type with multiple named associated values called **fields**
+- [Structs in Rust](https://doc.rust-lang.org/book/ch05-01-defining-structs.html) define a type with multiple named
+  associated values called **fields**
 - The name of the struct, `ChatMessage` is a type that describes the purpose of the data grouping
 - Each field is defined in the format `name: Type`
 - This struct functions as an interface of key:value pairs that define an atomic piece of data to be stored
 - Field definitions:
-  - An `Address` type representing the author of the `ChatMessage`
-  - A `soroban_sdk::string` type representing the message contents
-  - A `u64` type representing the timestamp when the `ChatMessage` was sent
+	- An `Address` type representing the author of the `ChatMessage`
+	- A `soroban_sdk::string` type representing the message contents
+	- A `u64` type representing the timestamp when the `ChatMessage` was sent
 
 > **⚠️ Warning**
-> 
-> A common mistake is importing the `alloc::string::String` type which will cause 
+>
+> A common mistake is importing the `alloc::string::String` type which will cause
 > you all sorts of issues!
-> 
+>
 > Make sure you import the `soroban_sdk::{String}` type!
 
 **Instanciate a `ChatMessage` instance to store:**
+
 ```rust
 ChatMessage {
-	author,
-	message,
-	timestamp: env.ledger().timestamp(),
+author,
+message,
+timestamp: env.ledger().timestamp(),
 }
 ```
 
@@ -170,25 +167,31 @@ How to store data on-chain:
 
 ```rust
 env.storage().temporary().set::<Storage, ChatMessage>(
-	&Storage::Chat(next_index), 
-	&ChatMessage {
-        author,
-        message,
-        timestamp: env.ledger().timestamp(),
-	}
+& Storage::Chat(next_index),
+& ChatMessage {
+author,
+message,
+timestamp: env.ledger().timestamp(),
+}
 );
 
 ```
 
 **Storing data on-chain**
+
 - Your function definition will need to include a reference to the `Env` type
-- The [soroban_sdk::env](https://docs.rs/soroban-sdk/latest/soroban_sdk/struct.Env.html) type provides ways to interact with the execution enviroment
-  - **TL;DR;** Contracts talk to the Stellar network via the environment interface
+- The [soroban_sdk::env](https://docs.rs/soroban-sdk/latest/soroban_sdk/struct.Env.html) type provides ways to interact
+  with the execution enviroment
+	- **TL;DR;** Contracts talk to the Stellar network via the environment interface
 - The `env.storage.temporary().set` function allows for storing data on-chain with a limited lifespan
-  - Data that needs to be [stored permanantly](https://developers.stellar.org/docs/learn/encyclopedia/storage/persisting-data) should go into `persistent()` durability
-  - Check out the docs for help on choosing the [right storage durability](https://developers.stellar.org/docs/learn/encyclopedia/storage/persisting-data#best-practices)
-- The diamond notation `::<Storage, ChatMessage>` is an optional [generic](https://doc.rust-lang.org/book/ch10-01-syntax.html) for type-safety
-  - Indicates the storage key will be of the type `Storage` and the stored value will be of the type `ChatMessage`
+	- Data that needs to
+	  be [stored permanantly](https://developers.stellar.org/docs/learn/encyclopedia/storage/persisting-data) should go
+	  into `persistent()` durability
+	- Check out the docs for help on choosing
+	  the [right storage durability](https://developers.stellar.org/docs/learn/encyclopedia/storage/persisting-data#best-practices)
+- The diamond notation `::<Storage, ChatMessage>` is an
+  optional [generic](https://doc.rust-lang.org/book/ch10-01-syntax.html) for type-safety
+	- Indicates the storage key will be of the type `Storage` and the stored value will be of the type `ChatMessage`
 - The statement `&Storage::Chat(next_index)` defines a key to store and retrieve on-chain data
 - The statement `&ChatMessage { author, message, timestamp: env.ledger().timestamp() }` defines the data to be stored
 
@@ -238,13 +241,14 @@ It uses the [Stellar Javascript SDK](https://stellar.github.io/js-stellar-sdk/)
 
 Getting storage key index data and building objects to represent `ChatMessage` keys.
 
-**Get Next Index** 
+**Get Next Index**
 
 Let's get the index sequentially, where we would store a new `ChatMessage`.
 
 This essentially functions as the length of the array of messages.
 
 **Example(index -> message):**
+
 * `0` -> `ChatMessage` 1
 * `1` -> `ChatMessage` 2
 * `2` -> `NextIndex`
@@ -252,6 +256,7 @@ This essentially functions as the length of the array of messages.
 Getting next index:
 
 `src/stellar.ts`
+
 ```typescript
 async function getNextIndex(): Promise<number> {
     // Define the deployed contract on testnet
@@ -294,27 +299,29 @@ function createChatLedgerKeys(latestIndex: number): xdr.LedgerKey[] {
 }
 ```
 
-- [XDR](https://developers.stellar.org/docs/learn/encyclopedia/data-format/xdr) is a binary format used to represent on-chain externally like in a web app
-- [LedgerKeyContractData](https://developers.stellar.org/docs/data/apis/rpc/api-reference/methods/getLedgerEntries) XDR objects are used to look up data on-chain that belongs to a contract
+- [XDR](https://developers.stellar.org/docs/learn/encyclopedia/data-format/xdr) is a binary format used to represent
+  on-chain externally like in a web app
+- [LedgerKeyContractData](https://developers.stellar.org/docs/data/apis/rpc/api-reference/methods/getLedgerEntries) XDR
+  objects are used to look up data on-chain that belongs to a contract
 - A ledger key for contract data consists of 3 parts
-  - The deployed contract ID
-  - The storage key consisting of 
-    - The custom data type name.  e.g. `Chat`
-    - The associated value.  e.g. `u32`
-  - Durability:  Either temporary, persistent or instance
+	- The deployed contract ID
+	- The storage key consisting of
+		- The custom data type name. e.g. `Chat`
+		- The associated value. e.g. `u32`
+	- Durability:  Either temporary, persistent or instance
 
 ---
 
 ## Fetch and Display `ChatMessage` Content
 
-`src/stellar.ts` was used to build an array of lookup keys.  Now let's get the ChatMessage content
+`src/stellar.ts` was used to build an array of lookup keys. Now let's get the ChatMessage content
 and display it in the UI.
 
 **Path:**  `src/chitChat.ts`
 
 `chitChat.ts` gets chat message data and displays it
 
-### Fetch ChatMessage Contract Data 
+### Fetch ChatMessage Contract Data
 
 Fetch chat message data for display in the UI.
 
@@ -390,7 +397,8 @@ Insert rendered markup for each chat message into the placeholder element:
 
 ---
 
-For more details on how Passkeys and Launchtube work check out the example repo: https://github.com/kalepail/smart-stellar-demo
+For more details on how Passkeys and Launchtube work check out the example
+repo: https://github.com/kalepail/smart-stellar-demo
 
 ## 👀 Want to learn more?
 

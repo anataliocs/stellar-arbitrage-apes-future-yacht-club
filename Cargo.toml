@@ -1,11 +1,21 @@
 [workspace]
 resolver = "2"
 members = [
-  "contracts/*",
+	"contracts/arbitrage-apes",
 ]
 
 [workspace.dependencies]
-soroban-sdk = "22"
+soroban-sdk = "22.0.8"
+quote = "1.0"
+syn = { version = "2.0", features = ["full"] }
+stellar-constants = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-default-impl-macro = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-event-assertion = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-non-fungible = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-pausable = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-pausable-macros = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-upgradeable = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+
 
 [profile.release]
 opt-level = "z"
@@ -17,6 +27,7 @@ panic = "abort"
 codegen-units = 1
 lto = true
 
+# For more information about this profile see https://soroban.stellar.org/docs/basic-tutorials/logging#cargotoml-profile
 [profile.release-with-logs]
 inherits = "release"
 debug-assertions = true
