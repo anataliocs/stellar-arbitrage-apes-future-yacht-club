@@ -13,6 +13,15 @@ Built with the new Open Zeppelin Wizard
 
 Open Zeppelin based NFT `NonFungibleBurnable` for token gating access to APIs including OZ Monitor.
 
+```json
+{
+  "base_uri": "www.arbitrage-apes.xyz",
+  "name": "Arbitrage Ape Yacht Club",
+  "symbol": "AAYC"
+}
+
+```
+
 **Path:** `contracts/arbitrage-apes`
 
 ### Build and Deploy your Smart Contract
@@ -35,7 +44,7 @@ stellar network use testnet && \
 stellar keys generate --global arbitrage-contract-owner-admin --network testnet --fund && 
 stellar keys use arbitrage-contract-owner-admin && \
 stellar keys address arbitrage-contract-owner-admin && \
-stellar keys address arbitrage-contract-owner-admin | xargs -0 -I {} echo "ARBITRAGE_APES_OWNER={}" > .env && source .env && \
+stellar keys address arbitrage-contract-owner-admin | xargs -0 -I {} echo "ARBITRAGE_APES_OWNER={}" >> .env && source .env && \
 echo "export ARBITRAGE_APES_OWNER=${ARBITRAGE_APES_OWNER}" && \
 echo SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin > .env && echo "export SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin"
 ```
@@ -48,7 +57,7 @@ echo SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin > .env && echo "expo
 - Sets metadata on the contract base `NonFungibleBurnable`
 
 ```bash
-stellar contract build --verbose --profile release --meta contract-base=NonFungibleBurnable
+stellar contract build --verbose --profile release
 ```
 
 **Deploy Contract and Update Env**
@@ -63,8 +72,19 @@ source .env && stellar contract deploy --alias arbitrage-apes-contract  \
 --source $SOURCE_ACCOUNT_CLI_NAME \
 --network testnet \
 -- --owner $ARBITRAGE_APES_OWNER \
- > contract-address.log | xargs -0 -I {} echo "DEPLOYED_ARBITRAGE_APES_CONTRACT={}" > .env && source .env && \
+ >> contract-address.log | xargs -0 -I {} echo "DEPLOYED_ARBITRAGE_APES_CONTRACT={}" >> .env && source .env && \
 echo "export DEPLOYED_ARBITRAGE_APES_CONTRACT=${DEPLOYED_ARBITRAGE_APES_CONTRACT}"
+```
+
+This will also set the following metadata on your contract:
+
+```json
+{
+  "base_uri": "www.arbitrage-apes.xyz",
+  "name": "Arbitrage Ape Yacht Club",
+  "symbol": "AAYC"
+}
+
 ```
 
 ---
