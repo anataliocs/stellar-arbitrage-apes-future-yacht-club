@@ -1,17 +1,78 @@
 # Arbitrage Apes Open Zeppelin Soroban Smart Contract
 
-Learn how to build smart contracts on the ✨ [Stellar Network](https://developers.stellar.org/)
+[Click here to create your contract](https://wizard.openzeppelin.com/stellar#)
+
+Audited Open Zeppelin NFT Contracts now on ✨ [Stellar Network](https://developers.stellar.org/)
 with [smart wallets](https://developers.stellar.org/docs/build/apps/smart-wallets)
 powered by Stellar Dev Tools
 like the **Stellar CLI**, the **Stellar Javascript SDK**, **Passkey Kit** and **Launchtube**.
 
-With a super-light front-end built with **Vite**.
+Built with the new Open Zeppelin Wizard
+
+## ✨ Stellar Smart Contract Arbitrage Apes Demo
+
+Secure, passkey-powered, chat messages.
+Message content is persisted in temporary contract storage.
+
+**Path:** `contracts/arbitrage-apes`
+
+### Build and Deploy your Smart Contract
+
+[Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started) is step one!
+
+For support, visit our [Discord](https://discord.gg/stellardev).
+
+**Deploy Arbitrage Apes Smart Contract:**
+
+**Setup Identity and Env**
+
+- Set CLI to use testnet by default
+- Generate and fund Testnet key
+- Use as default source account for future CLI Commands
+- Store in `.env` as `ARBITRAGE_APES_OWNER`:
+- Export ENV var ARBITRAGE_APES_OWNER globally(may require terminal restart)
+
+```bash
+stellar network use testnet && \
+stellar keys generate --global arbitrage-contract-owner-admin --network testnet --fund && 
+stellar keys use arbitrage-contract-owner-admin && \
+stellar keys address arbitrage-contract-owner-admin && \
+stellar keys address arbitrage-contract-owner-admin | xargs -0 -I {} echo "ARBITRAGE_APES_OWNER={}" > .env && source .env && \
+echo "export ARBITRAGE_APES_OWNER=${ARBITRAGE_APES_OWNER}" && \
+echo SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin > .env && echo "export SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin"
+```
+
+**Build contract:**
+
+```bash
+stellar contract build --profile release
+```
+
+**Deploy Contract and Update Env**
+
+- Import source to use env vars in Stellar CLI
+- Deploy contract from built wasm
+- Sets contract alias `arbitrage-apes-contract`
+
+```bash
+source .env && stellar contract deploy --alias arbitrage-apes-contract  \
+--wasm target/wasm32v1-none/release/arbitrage_apes.wasm \
+--source $SOURCE_ACCOUNT_CLI_NAME \
+--network testnet \
+-- --owner $ARBITRAGE_APES_OWNER \
+ > contract-address.log | xargs -0 -I {} echo "DEPLOYED_ARBITRAGE_APES_CONTRACT={}" > .env && source .env && \
+echo "export DEPLOYED_ARBITRAGE_APES_CONTRACT=${DEPLOYED_ARBITRAGE_APES_CONTRACT}"
+```
+
+---
+
+## Arbitrage Apes Walkthrough
 
 **🛠️ Dev Tools**
 
 - 💻 [Stellar CLI](https://developers.stellar.org/docs/tools/cli/install-cli)
-	-
-	Featuring: [Generating Bindings](https://developers.stellar.org/docs/tools/cli/stellar-cli#stellar-contract-bindings)
+  -
+  Featuring: [Generating Bindings](https://developers.stellar.org/docs/tools/cli/stellar-cli#stellar-contract-bindings)
 - ⚙️ [Stellar Javascript SDK](https://developers.stellar.org/docs/tools/sdks/client-sdks#javascript-sdk)
 	- Featuring: [Stellar RPC Server](https://stellar.github.io/js-stellar-sdk/module-rpc.Server.html)
 - 🔐 [Passkey Kit](https://github.com/kalepail/passkey-kit) - Seamless authentication
@@ -47,48 +108,6 @@ submitting transactions.
 	- Pays transaction fees
 
 ---
-
-## ✨ Stellar Smart Contract Snapchain Demo
-
-Secure, passkey-powered, chat messages.
-Message content is persisted in temporary contract storage.
-
-**Path:** `contracts/snapchain`
-
-### Build and Deploy your Smart Contract
-
-[Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started) is step one!
-
-For support, visit our [Discord server](https://discord.gg/stellardev).
-
-**Build contract:**
-
-```bash
-stellar contract build
-```
-
-**Deploy Snapchain contract:**
-
-```bash
-stellar contract deploy \
-    --wasm target/wasm32-unknown-unknown/release/snapchain.wasm \
-    --source alice \
-    --network testnet
-```
-
-**Get your Deployed Contract ID:**
-
-_Example terminal output:_
-
-```terminaloutput
-🔗 https://stellar.expert/explorer/testnet/contract/CBK6E4G3DCE3OR44ZYMKV36O35LMUIGH7LRV4GIUUMA5UDNWS57MAJN3
-✅ Deployed!
-CBK6E4G3DCE3OR44ZYMKV36O35LMUIGH7LRV4GIUUMA5UDNWS57MAJN3
-```
-
-## Snapchain `lib.rs` Walkthrough
-
-Follow along [here](contracts/snapchain/src/lib.rs).
 
 ### Storing Data
 
