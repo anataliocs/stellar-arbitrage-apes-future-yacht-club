@@ -2,11 +2,6 @@
 
 set -e
 
-clear
-
-test .env
-source .env
-
 printf "\n Remove previously deployed contract"
 printf "\n Execute command: %s \n" "sed -i '.env.old' '/^DEPLOYED_ARBITRAGE_APES_CONTRACT=.*/d' .env"
 

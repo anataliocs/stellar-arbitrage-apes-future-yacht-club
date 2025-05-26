@@ -2,8 +2,6 @@
 
 set -e
 
-clear
-
 printf "\n This script is repeatedable and reusable to run through this setup process again \n"
 printf "\n Each execution will give you a unique configuration \n"
 
@@ -63,8 +61,8 @@ ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name >> .env
 echo "export TESTNET_RPC_URL=https://soroban-testnet.stellar.org" && echo \
 "TESTNET_RPC_URL=https://soroban-testnet.stellar.org" >> .env
 
-echo "export TESTNET_NETWORK_PASSPHRASE=Test SDF Network ; September 2015" && echo \
-"TESTNET_NETWORK_PASSPHRASE=Test SDF Network ; September 2015" >> .env
+echo 'export TESTNET_NETWORK_PASSPHRASE=Test SDF Network ; September 2015' && echo \
+"TESTNET_NETWORK_PASSPHRASE='Test SDF Network ; September 2015' >> .env"
 
 printf "\n Step 1 of Config Complete \n"
 printf "\n ------------------------- \n"
@@ -74,3 +72,4 @@ cat .env
 
 printf "\n Old Config Archived in .env.old \n"
 
+source .env

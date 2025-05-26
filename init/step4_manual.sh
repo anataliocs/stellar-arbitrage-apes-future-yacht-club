@@ -2,8 +2,6 @@
 
 set -e
 
-clear
-
 generate_bindings="source .env && stellar contract bindings typescript \
 --network testnet \
 --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \

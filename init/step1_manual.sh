@@ -2,8 +2,6 @@
 
 set -e
 
-clear
-
 default_source_account="arbitrage-contract-owner-admin-new"
 
 printf "\n To Deploy contract to testnet \n --- \n"

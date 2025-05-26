@@ -7,7 +7,9 @@ mod test;
 use soroban_sdk::{
     contract, contracterror, contractimpl, symbol_short, Address, BytesN, Env, String, Symbol,
 };
-use stellar_non_fungible::{burnable::NonFungibleBurnable, Base, NonFungibleToken};
+use stellar_non_fungible::{
+    burnable::NonFungibleBurnable, Base, NonFungibleToken
+};
 
 const OWNER: Symbol = symbol_short!("OWNER");
 
@@ -25,30 +27,45 @@ pub enum ArbitrageApeYachtClubError {
 
 #[contractimpl]
 impl ArbitrageApeYachtClub {
-    pub fn __constructor(e: &Env, owner: Address) {
+    pub fn __constructor(e: &Env, owner: Address, base_uri: String, name: String, symbol: String) {
         Base::set_metadata(
             e,
-            String::from_str(e, "www.arbitrage-apes.xyz"),
-            String::from_str(e, "Arbitrage Ape Yacht Club"),
-            String::from_str(e, "AAYC"),
+            base_uri,
+            name,
+            symbol,
         );
-        e.storage().instance().set(&OWNER, &owner);
+        e.storage()
+            .instance()
+            .set(&OWNER, &owner);
 
-        let mut initial_version: u32 = e.storage().instance().get(&VERSION).unwrap_or(0);
-        e.storage().instance().set(&VERSION, &initial_version);
+        let initial_version: u32 = e.storage()
+            .instance()
+            .get(&VERSION)
+            .expect("version should be set");
+        
+        e.storage()
+            .instance()
+            .set(&VERSION, &initial_version);
     }
 
     pub fn version(e: &Env) -> u32 {
-        e.storage().instance().get(&VERSION).unwrap_or(0)
+        e.storage()
+            .instance()
+            .get::<Symbol, u32>(&VERSION).expect("version should be set")
     }
 
     pub fn upgrade(e: &Env, new_wasm_hash: BytesN<32>) {
-        let owner: Address = e.storage().instance().get(&OWNER).unwrap();
+        let owner: Address = e.storage()
+            .instance()
+            .get(&OWNER).expect("owner should be set");
         owner.require_auth();
         
-        let current_version = Self::version(e);
-        e.storage().instance().set(&VERSION, &current_version);
-        e.deployer().update_current_contract_wasm(new_wasm_hash);
+        let current_version: u32 = Self::version(e) + 1;
+        e.storage()
+            .instance()
+            .set::<Symbol, u32>(&VERSION, &current_version);
+        e.deployer()
+            .update_current_contract_wasm(new_wasm_hash);
     }
 
     pub fn mint(e: &Env, to: Address, token_id: u32) {

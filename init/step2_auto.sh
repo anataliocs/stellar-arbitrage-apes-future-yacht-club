@@ -2,8 +2,6 @@
 
 set -e
 
-clear
-
 printf "\n Executing Step 2 of the Setup and Build Process \n"
 printf "\n ------------------------- \n"
 
@@ -52,3 +50,4 @@ printf "\n ------------------------- \n"
 
 printf "\n Old Config Archived in .env.old \n"
 
+source .env

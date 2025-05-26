@@ -2,8 +2,6 @@
 
 set -e
 
-clear
-
 test .env
 source .env
 

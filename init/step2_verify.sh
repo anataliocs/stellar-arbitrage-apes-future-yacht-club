@@ -2,8 +2,6 @@
 
 set -e
 
-clear
-
 test .env
 
 printf "\n Local .env \n -- \n"

@@ -101,8 +101,6 @@ Upgrading your deployed contract
 alias step1_auto="./init/step1_auto.sh" && alias step1_print="./init/step1_manual.sh" && \
 alias step1_verify="./init/step1_verify.sh"
 
-# To set them for all 4 steps at once
-./alias.sh
 ```
 
 **Auto-configuration:**
@@ -183,11 +181,16 @@ alias step3_verify="./init/step3_verify.sh"
 The following metadata will be set in your contract:
 ```json
 {
-  "base_uri": "www.arbitrage-apes.xyz",
-  "name": "Arbitrage Ape Yacht Club",
-  "symbol": "AAYC"
+  "base_uri": "www.stellar-arbitrage-apes.xyz",
+  "name": "Stellar Arbitrage Ape Yacht Club",
+  "symbol": "SAAYC"
 }
 
+This metadata can be updated by updating the following in `init/step3_auto.sh` or by executing the command manually
+```
+default_contract_meta_base_uri="www.stellar-arbitrage-apes.xyz"
+default_contract_meta_name="Arbitrage Ape Yacht Club"
+default_contract_meta_symbol="SAAYC"
 ```
 
 **Auto-configuration:**
