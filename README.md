@@ -210,6 +210,7 @@ step3_verify
 - Sets the output package to ARBITRAGE_APES_CONTRACT_NAME
 - Sets Deployed contract address to DEPLOYED_ARBITRAGE_APES_CONTRACT
 - Sets NFT metadata in your contract
+- Sets your launchtube token in your .env as `ARBITRAGE_APES_LAUNCHTUBE_TOKEN`
 
 ```bash
 alias step4_auto="./init/step4_auto.sh" && alias step3_print="./init/step4_manual.sh" && \

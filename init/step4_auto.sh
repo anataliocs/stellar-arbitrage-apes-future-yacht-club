@@ -14,6 +14,9 @@ if test -f ".env"; then
 printf "\n Removing previous ARBITRAGE_APES_CONTRACT_BINDINGS and archiving to .env.old \n"
 sed -i ".old" '/^ARBITRAGE_APES_CONTRACT_BINDINGS=.*$/d' .env
 
+printf "\n Removing previous ARBITRAGE_APES_LAUNCHTUBE_TOKEN and archiving to .env.old \n"
+sed -i ".old" '/^ARBITRAGE_APES_LAUNCHTUBE_TOKEN=.*$/d' .env
+
 else
   touch .env
 fi
@@ -39,9 +42,19 @@ printf "\n Contract bindings package: %s \n" "$bindings_path"
 printf "\n Exporting ARBITRAGE_APES_CONTRACT_BINDINGS to .env var \n"
 echo "ARBITRAGE_APES_CONTRACT_BINDINGS=$bindings_path" >> .env
 
-printf "\n Building npm package: %s \n" "$bindings_path"
+printf "\n Building and linking npm package using absolute path: %s \n" "$ARBITRAGE_APES_ROOT/$ARBITRAGE_APES_CONTRACT_BINDINGS"
 
-source .env && pnpm link "$ARBITRAGE_APES_ROOT/$ARBITRAGE_APES_CONTRACT_BINDINGS"
+source .env && pnpm link "$ARBITRAGE_APES_ROOT/$ARBITRAGE_APES_CONTRACT_BINDINGS" && pnpm install
+
+printf "\n Generate and set Launchtube Token \n"
+launchtube_token=$(curl https://testnet.launchtube.xyz/gen | jq '.[0]' | xargs echo -n)
+echo "ARBITRAGE_APES_LAUNCHTUBE_TOKEN=$launchtube_token" >> .env
+
+printf "\n Launchtube Token: %s \n" "$launchtube_token"
+
+printf "\n Set client directory \n"
+client_directory="$ARBITRAGE_APES_ROOT/client/$ARBITRAGE_APES_ROOT/"
+echo "ARBITRAGE_APES_CLIENT_ROOT=$client_directory" >> .env
 
 # Confirmation of Success
 
