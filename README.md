@@ -26,22 +26,18 @@ Open Zeppelin based NFT `NonFungibleBurnable` for token gating access to APIs in
 }
 
 ```
-
 **Path:** `contracts/arbitrage-apes`
 
-## Local Environment Setup
 
-[Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started) is step one!
-For support, visit our [Discord](https://discord.gg/stellardev).
+**Next Step:**  Choose Devcontainers or Local Setup
 
-You can either follow the steps above or use the attached `.devcontainer` configuration.  
+----
 
 ## How to start with Devcontainers
  
 Read the [Github Docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
 
-- Option 1: Create [Github Codespace from the Github UI](https://docs.github.
-  com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository)
+- Option 1: Create [Github Codespace from the Github UI](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository)
 - Option 2: Use a template string:  `https://codespaces.new/OWNER/REPO-NAME`
   - Replace `OWNER` with your Github name
   - Replace `REPO-NAME` with whatever you named this repo
@@ -52,27 +48,28 @@ Read the [Github Docs](https://docs.github.com/en/codespaces/setting-up-your-pro
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/OWNER/REPO-NAME)
 ```
 
-**IMPORTANT!**
-> Ensure you are in the root directory of your project!
+----
+
+## Local Environment Setup
+
+[Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started)
+For support, visit our [Discord](https://discord.gg/stellardev).
+
+**Ensure you are in your project root directory**
 ```bash
 echo $PWD
 ```
-This command SHOULD print out your project root:
+Confirm your project root:
 `/Users/LOCAL_USER/workspace/stellar-arbitrage-apes-YOUR-PROJECT`
-NOTE:  You should be in your project root when you open your IDE by default otherwise your workspace is 
-misconfigured! `cd` to project root or re-open your repo as a new project in your IDE.
+`cd` to project root if not
 
-Verify your workspace is configured correctly.  Note, expected node version varies by client front-end impl.
-If you need help with node/npm setup:  https://code.visualstudio.com/docs/nodejs/nodejs-tutorial
+Verify your workspace is configured correctly.
 ```bash
-stellar --version && rustc --version && cargo version && nvm current && cat .env && echo $ARBITRAGE_APES_ROOT
+stellar --version && rustc --version && cargo version && nvm current && cat .env
 ```
-**Do not progress until you have your local env setup correctly!!**
+[Node/npm setup](https://code.visualstudio.com/docs/nodejs/nodejs-tutorial)
 
-----
-
-Your project lifecycle will consist of setup, config, build and deploy steps presented as 4 steps implemented as four 
-distinct commands.
+**Your project lifecycle will consist of setup, config, build and deploy steps:**
 1. Setup Stellar accounts and env
 2. Build Contract
 3. Deploy contract and setup env
@@ -81,29 +78,38 @@ distinct commands.
 **During active development**
 Upgrading your deployed contract
 
+**Next Step:** Setup Stellar accounts and env
+
 ---
 
 ## STEP 1: Setup Identity and Env
 
 - Set CLI to use testnet by default
 - Generate and fund Testnet key
-- Use as default source account for future CLI Commands
+- Set default source account for future CLI Commands
 - Store in `.env` as `ARBITRAGE_APES_OWNER`
 - Set name of contract in `.env`
 - Set your project root
 
+**Setup Styles**
+1. `auto` config for a scripted setup
+2. `manual` print out commands to execute
+
 **Setup aliases for step 1 scripts**
+- These will not persist through terminal sessions.
 ```bash
 alias step1_auto="./init/step1_auto.sh" && alias step1_print="./init/step1_manual.sh" && \
-alias step_verify="./init/step1_verify.sh"
+alias step1_verify="./init/step1_verify.sh"
 ```
 
 **Auto-configuration:**
+- Care was taken to make scripts portable
+- Windows users will need WSL and bash
 ```bash
 step1_auto
 ```
 
-**Or print out the commands to execute on your own:**
+**Manual-configuration: Print out the commands to execute on your own:**
 ```
 step1_print
 ```
@@ -113,18 +119,47 @@ step1_print
 step1_verify
 ```
 
+**Next Step:** Build Contract
+
 ----
 
 ## STEP 2: Build contract
 
 - Update your contract
 - Build contract to standard location:  `target/wasm32v1-none/release/arbitrage_apes.wasm`
-- Using release profile
+- Use release profile
 - Use `printenv CARGO_BUILD_RUSTFLAGS` to view build parameters
 
+**Setup aliases for step 2 scripts**
+- These will not persist through terminal sessions.
 ```bash
-stellar contract build --verbose --profile release
+alias step2_auto="./init/step2_auto.sh" && alias step2_print="./init/step2_manual.sh" && \
+alias step2_verify="./init/step2_verify.sh"
 ```
+
+**Auto-configuration:**
+- Care was taken to make scripts portable
+- Windows users will need WSL and bash
+```bash
+step2_auto
+```
+
+**Manual-configuration: Print out the commands to execute on your own:**
+```bash
+step2_print
+```
+
+**Verify your Stellar Dev Env is setup correctly:**
+```bash
+step2_verify
+```
+
+**Verify:**
+- Check for CLI warnings
+- Not the path of the generated wasm File
+- Ensure all 18 functions are exported
+
+**Next Step:** Deploy Contract
 
 ----
 

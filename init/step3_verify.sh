@@ -7,10 +7,8 @@ clear
 test .env
 
 printf "\n Local .env \n -- \n"
+printf "\n Ensure DEPLOYED_ARBITRAGE_APES_CONTRACT is set correctly  \n"
+printf "\n ------------------------- \n"
 cat .env
+printf "\n ------------------------- \n"
 
-printf "\n Stellar ENV: \n -- \n"
-stellar env
-
-printf "\n Stellar Accounts \n -- \n"
-stellar keys ls
