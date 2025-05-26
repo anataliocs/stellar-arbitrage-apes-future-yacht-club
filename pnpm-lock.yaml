@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  arbitrage-apes: link:packages/arbitrage-apes
+
 importers:
 
   .:
@@ -11,12 +14,12 @@ importers:
       '@stellar/stellar-sdk':
         specifier: ^13.3.0
         version: 13.3.0
+      arbitrage-apes:
+        specifier: link:packages/arbitrage-apes
+        version: link:packages/arbitrage-apes
       passkey-kit:
         specifier: ^0.10.22
         version: 0.10.22
-      snapchain_sdk:
-        specifier: file:./snapchain_sdk
-        version: file:snapchain_sdk
     devDependencies:
       typescript:
         specifier: ^5.8.3
@@ -511,9 +514,6 @@ packages:
   sha.js@2.4.11:
     resolution: {integrity: sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==}
     hasBin: true
-
-  snapchain_sdk@file:snapchain_sdk:
-    resolution: {directory: snapchain_sdk, type: directory}
 
   sodium-native@4.3.3:
     resolution: {integrity: sha512-OnxSlN3uyY8D0EsLHpmm2HOFmKddQVvEMmsakCrXUzSd8kjjbzL413t4ZNF3n0UxSwNgwTyUvkmZHTfuCeiYSw==}
@@ -1010,13 +1010,6 @@ snapshots:
     dependencies:
       inherits: 2.0.4
       safe-buffer: 5.2.1
-
-  snapchain_sdk@file:snapchain_sdk:
-    dependencies:
-      '@stellar/stellar-sdk': 13.3.0
-      buffer: 6.0.3
-    transitivePeerDependencies:
-      - debug
 
   sodium-native@4.3.3:
     dependencies:

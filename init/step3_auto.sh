@@ -18,7 +18,7 @@ else
   touch .env
 fi
 
-deploy_command="stellar contract deploy --alias arbitrage-apes-contract  \
+deploy_command="source .env && stellar contract deploy --alias arbitrage-apes-contract  \
 --wasm target/wasm32v1-none/release/arbitrage_apes.wasm \
 --source $SOURCE_ACCOUNT_CLI_NAME \
 --network testnet \

@@ -53,7 +53,7 @@ Read the [Github Docs](https://docs.github.com/en/codespaces/setting-up-your-pro
 ## Local Environment Setup
 
 [Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started)
-For support, visit our [Discord](https://discord.gg/stellardev).
+For support, visit our [Discord](https://discord.gg/stellardev)
 
 **Ensure you are in your project root directory**
 ```bash
@@ -63,13 +63,13 @@ Confirm your project root:
 `/Users/LOCAL_USER/workspace/stellar-arbitrage-apes-YOUR-PROJECT`
 `cd` to project root if not
 
-Verify your workspace is configured correctly.
+Verify your workspace is configured correctly:
 ```bash
-stellar --version && rustc --version && cargo version && nvm current && cat .env
+stellar --version && rustc --version && cargo version && nvm current
 ```
 [Node/npm setup](https://code.visualstudio.com/docs/nodejs/nodejs-tutorial)
 
-**Your project lifecycle will consist of setup, config, build and deploy steps:**
+**Your project lifecycle will consist of setup, build and deploy and UI setup steps:**
 1. Setup Stellar accounts and env
 2. Build Contract
 3. Deploy contract and setup env
@@ -78,7 +78,7 @@ stellar --version && rustc --version && cargo version && nvm current && cat .env
 **During active development**
 Upgrading your deployed contract
 
-**Next Step:** Setup Stellar accounts and env
+**Next Step:** Setup Stellar accounts and Env
 
 ---
 
@@ -88,7 +88,7 @@ Upgrading your deployed contract
 - Generate and fund Testnet key
 - Set default source account for future CLI Commands
 - Store in `.env` as `ARBITRAGE_APES_OWNER`
-- Set name of contract in `.env`
+- Set standard contract name in `.env` to be used as a CLI alias and package for contract bindings
 - Set your project root
 
 **Setup Styles**
@@ -110,7 +110,7 @@ step1_auto
 ```
 
 **Manual-configuration: Print out the commands to execute on your own:**
-```
+```bash
 step1_print
 ```
 
@@ -126,9 +126,10 @@ step1_verify
 ## STEP 2: Build contract
 
 - Update your contract
-- Build contract to standard location:  `target/wasm32v1-none/release/arbitrage_apes.wasm`
+- Build contract with a standard location:  `target/wasm32v1-none/release/arbitrage_apes.wasm`
 - Use release profile
-- Use `printenv CARGO_BUILD_RUSTFLAGS` to view build parameters
+- Set the ARBITRAGE_APES_WASM to the wasm path in the .env
+- Set the ARBITRAGE_APES_WASM_HASH .env
 
 **Setup aliases for step 2 scripts**
 - These will not persist through terminal sessions.
@@ -165,19 +166,18 @@ step2_verify
 
 ## STEP 3: Deploy Contract and Update Env
 
-- Import source to use env vars in Stellar CLI
-- Deploy contract from built wasm
-- Sets contract alias `arbitrage-apes-contract`
-- Set contract metadata
+- Use ARBITRAGE_APES_WASM and SOURCE_ACCOUNT_CLI_NAME and ARBITRAGE_APES_CONTRACT_NAME from .env
+- Use Stellar CLI to deploy contract using .env vars
+- Sets contract alias to ARBITRAGE_APES_CONTRACT_NAME from .env
+- Sets Deployed contract address to DEPLOYED_ARBITRAGE_APES_CONTRACT
+- Sets NFT metadata in your contract
 
 ```bash
 alias step3_auto="./init/step3_auto.sh" && alias step3_print="./init/step3_manual.sh" && \
 alias step3_verify="./init/step3_verify.sh"
 ```
 
-This will also set the following metadata on your contract:
-
-Or whatever update it to:
+The following metadata will be set in your contract:
 ```json
 {
   "base_uri": "www.arbitrage-apes.xyz",
@@ -192,8 +192,8 @@ Or whatever update it to:
 step3_auto
 ```
 
-**Or print out the commands to execute on your own:**
-```
+**Manual: Print out the commands to execute on your own:**
+```bash
 step3_print
 ```
 
@@ -205,19 +205,43 @@ step3_verify
 ----
 
 ## STEP 4: Generate Contracts Bindings
-- Use the 
-
+- Use the DEPLOYED_ARBITRAGE_APES_CONTRACT and ARBITRAGE_APES_CONTRACT_NAME from .env
+- Use Stellar CLI to generate contract bindings using .env vars
+- Sets the output package to ARBITRAGE_APES_CONTRACT_NAME
+- Sets Deployed contract address to DEPLOYED_ARBITRAGE_APES_CONTRACT
+- Sets NFT metadata in your contract
 
 ```bash
-source .env && stellar contract bindings typescript \
---network testnet \
---id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
---output-dir ./packages/$ARBITRAGE_APES_CONTRACT_NAME \
---overwrite && \
- npm link 
+alias step4_auto="./init/step4_auto.sh" && alias step3_print="./init/step4_manual.sh" && \
+alias step4_verify="./init/step4_verify.sh"
 ```
 
----
+**Auto-configuration:**
+```bash
+step4_auto
+```
+
+**Manual: Print out the commands to execute on your own:**
+```bash
+step4_print
+```
+
+**Verify your Contract is deployed correctly:**
+```bash
+step4_verify
+```
+
+
+**Review**
+- Your .env file with everything you need to build a dapp around your Open Zeppelin NFT Contract
+- Built and deployed your contract and stored the results in `contract-address.log` and `contract-build.log`
+- Deployed your contract bindings and use `npm link` which add the package `node_modules`
+
+
+**Next Steps:** Modify your NFT Contract code and Upgrade the Contract 
+
+----
+
 
 ## Arbitrage Apes Walkthrough
 

@@ -16,12 +16,14 @@ sed -i ".old" '/^ARBITRAGE_APES_CONTRACT_NAME=.*$/d' .env
 
 printf "\n Removing previous ARBITRAGE_APES_ROOT and archiving to .env.old \n"
 sed -i ".old" '/^ARBITRAGE_APES_ROOT=.*$/d' .env
+
 else
   touch .env
 fi
 
 printf "\n Setting Project Root in .env \n Executing command: %s \n" \
-"echo 'export ARBITRAGE_APES_ROOT=$PWD' && echo 'ARBITRAGE_APES_ROOT=$PWD' >> .env"
+"echo 'ARBITRAGE_APES_ROOT=$PWD' >> .env"
+echo "ARBITRAGE_APES_ROOT=$PWD" >> .env
 
 default_contract_name="arbitrage-apes"
 

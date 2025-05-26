@@ -1,7 +1,7 @@
 {
-  "name": "snapchain-demo",
+  "name": "arbitrage-apes-vite-starter",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^13.3.0",
-    "passkey-kit": "^0.10.22",
-    "snapchain_sdk": "file:./snapchain_sdk"
+    "arbitrage-apes": "link:packages/arbitrage-apes",
+    "passkey-kit": "^0.10.22"
   }
 }
