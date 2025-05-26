@@ -7,11 +7,21 @@ clear
 printf "\n This script is repeatedable and reusable to run through this setup process again \n"
 printf "\n Each execution will give you a unique configuration \n"
 
-if test -f "../.env"; then
-  rm ../.env
+if test -f ".env"; then
+printf "\n Removing previous SOURCE_ACCOUNT_CLI_NAME and archiving to .env.old \n"
+sed -i ".old" '/^SOURCE_ACCOUNT_CLI_NAME=.*$/d' .env
+
+printf "\n Removing previous ARBITRAGE_APES_CONTRACT_NAME and archiving to .env.old \n"
+sed -i ".old" '/^ARBITRAGE_APES_CONTRACT_NAME=.*$/d' .env
+
+printf "\n Removing previous ARBITRAGE_APES_ROOT and archiving to .env.old \n"
+sed -i ".old" '/^ARBITRAGE_APES_ROOT=.*$/d' .env
 else
-  touch ../.env
+  touch .env
 fi
+
+printf "\n Setting Project Root in .env \n Executing command: %s \n" \
+"echo 'export ARBITRAGE_APES_ROOT=$PWD' && echo 'ARBITRAGE_APES_ROOT=$PWD' >> .env"
 
 default_contract_name="arbitrage-apes"
 
@@ -44,3 +54,12 @@ echo SOURCE_ACCOUNT_CLI_NAME=$default_source_account >> .env && echo "export
 SOURCE_ACCOUNT_CLI_NAME=$default_source_account" && \
 echo "export ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name" && echo \
 ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name >> .env
+
+printf "\n Step 1 of Config Complete \n"
+printf "\n ------------------------- \n"
+
+printf "\n Generated .env file: \n"
+cat .env
+
+printf "\n Old Config Archived in .env.old \n"
+

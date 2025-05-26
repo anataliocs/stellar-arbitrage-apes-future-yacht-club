@@ -31,3 +31,4 @@ target
 /packages/arbitrage-apes/package.json
 /packages/arbitrage-apes/README.md
 /packages/arbitrage-apes/tsconfig.json
+/.env.old

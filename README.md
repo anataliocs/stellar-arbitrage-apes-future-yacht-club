@@ -4,12 +4,15 @@
 - Open Zeppelin Repos:  https://github.com/OpenZeppelin/stellar-contracts
 - Review the Audit Reports here:  https://github.com/OpenZeppelin/stellar-contracts/tree/main/audits
 
-Audited Open Zeppelin NFT Contracts now on ✨ [Stellar Network](https://developers.stellar.org/)
+Fully Audited Open Zeppelin NFT Contracts now on ✨ [Stellar Network](https://developers.stellar.org/)
 with [smart wallets](https://developers.stellar.org/docs/build/apps/smart-wallets)
 powered by Stellar Dev Tools
 like the **Stellar CLI**, the **Stellar Javascript SDK**, **Passkey Kit** and **Launchtube**.
 
-Built with the new Open Zeppelin Wizard
+Audited smart contracts add another layer of security and safety to the Soroban ecosystem which is already built 
+from the ground up with a security mindset.
+
+Built with the new Open Zeppelin Wizard ✅
 
 ## ✨ Stellar Smart Contract Arbitrage Apes Demo
 
@@ -31,15 +34,31 @@ Open Zeppelin based NFT `NonFungibleBurnable` for token gating access to APIs in
 [Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started) is step one!
 For support, visit our [Discord](https://discord.gg/stellardev).
 
-You can either follow the steps above or use the attached `.devcontainer` configuration.
+You can either follow the steps above or use the attached `.devcontainer` configuration.  
+
+## How to start with Devcontainers
  
+Read the [Github Docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
+
+- Option 1: Create [Github Codespace from the Github UI](https://docs.github.
+  com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository)
+- Option 2: Use a template string:  `https://codespaces.new/OWNER/REPO-NAME`
+  - Replace `OWNER` with your Github name
+  - Replace `REPO-NAME` with whatever you named this repo
+
+**Create an Open in Github Codespaces Badge:**
+- Option 3: Replace the fields as indicated
+```markdown
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/OWNER/REPO-NAME)
+```
+
 **IMPORTANT!**
 > Ensure you are in the root directory of your project!
 ```bash
-echo $PWD && echo "export ARBITRAGE_APES_ROOT=$PWD" && echo "ARBITRAGE_APES_ROOT=$PWD" >> .env
+echo $PWD
 ```
 This command SHOULD print out your project root:
-`/Users/chris.anatalio/projects/stellar-arbitrage-apes-future-yacht-club`
+`/Users/LOCAL_USER/workspace/stellar-arbitrage-apes-YOUR-PROJECT`
 NOTE:  You should be in your project root when you open your IDE by default otherwise your workspace is 
 misconfigured! `cd` to project root or re-open your repo as a new project in your IDE.
 
@@ -72,8 +91,6 @@ Upgrading your deployed contract
 - Store in `.env` as `ARBITRAGE_APES_OWNER`
 - Set name of contract in `.env`
 - Set your project root
-
-
 
 **Setup aliases for step 1 scripts**
 ```bash
@@ -153,6 +170,8 @@ step3_verify
 ----
 
 ## STEP 4: Generate Contracts Bindings
+- Use the 
+
 
 ```bash
 source .env && stellar contract bindings typescript \

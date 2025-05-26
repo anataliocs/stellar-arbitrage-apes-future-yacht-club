@@ -66,8 +66,7 @@
   "customizations": {
     "codespaces": {
       "openFiles": [
-        "CONSENSUS-HACKATHON-DETAILS.md",
-        "choose-front-end-framework.md"
+        "README.md",
       ]
     },
     "vscode": {

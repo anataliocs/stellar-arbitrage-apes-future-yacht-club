@@ -8,7 +8,7 @@ test .env
 source .env
 
 printf "\n Removing previously deployed contract backed up in .env.old \n"
-sed -i ".env.old" '/^DEPLOYED_ARBITRAGE_APES_CONTRACT=.*/d' .env
+sed -i ".env.old" '/^DEPLOYED_ARBITRAGE_APES_CONTRACT=.*$/d' .env
 
 deploy_command="stellar contract deploy --alias arbitrage-apes-contract  \
 --wasm target/wasm32v1-none/release/arbitrage_apes.wasm \
