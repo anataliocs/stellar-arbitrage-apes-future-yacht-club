@@ -26,3 +26,8 @@ dist-ssr
 target
 .env
 /.stellar/contract-ids/*
+/.env.env.old
+/packages/arbitrage-apes/src/index.ts
+/packages/arbitrage-apes/package.json
+/packages/arbitrage-apes/README.md
+/packages/arbitrage-apes/tsconfig.json

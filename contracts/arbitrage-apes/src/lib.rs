@@ -5,11 +5,13 @@
 mod test;
 
 use soroban_sdk::{
-    contract, contracterror, contractimpl, symbol_short, Address, Env, String, Symbol,
+    contract, contracterror, contractimpl, symbol_short, Address, BytesN, Env, String, Symbol,
 };
 use stellar_non_fungible::{burnable::NonFungibleBurnable, Base, NonFungibleToken};
 
 const OWNER: Symbol = symbol_short!("OWNER");
+
+const VERSION: Symbol = symbol_short!("VERSION");
 
 #[contract]
 pub struct ArbitrageApeYachtClub;
@@ -31,6 +33,22 @@ impl ArbitrageApeYachtClub {
             String::from_str(e, "AAYC"),
         );
         e.storage().instance().set(&OWNER, &owner);
+
+        let mut initial_version: u32 = e.storage().instance().get(&VERSION).unwrap_or(0);
+        e.storage().instance().set(&VERSION, &initial_version);
+    }
+
+    pub fn version(e: &Env) -> u32 {
+        e.storage().instance().get(&VERSION).unwrap_or(0)
+    }
+
+    pub fn upgrade(e: &Env, new_wasm_hash: BytesN<32>) {
+        let owner: Address = e.storage().instance().get(&OWNER).unwrap();
+        owner.require_auth();
+        
+        let current_version = Self::version(e);
+        e.storage().instance().set(&VERSION, &current_version);
+        e.deployer().update_current_contract_wasm(new_wasm_hash);
     }
 
     pub fn mint(e: &Env, to: Address, token_id: u32) {

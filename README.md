@@ -1,6 +1,8 @@
 # Arbitrage Apes Open Zeppelin Soroban Smart Contract
 
-[Click here to create your contract](https://wizard.openzeppelin.com/stellar#)
+- [Click here to create your contract](https://wizard.openzeppelin.com/stellar#)
+- Open Zeppelin Repos:  https://github.com/OpenZeppelin/stellar-contracts
+- Review the Audit Reports here:  https://github.com/OpenZeppelin/stellar-contracts/tree/main/audits
 
 Audited Open Zeppelin NFT Contracts now on ✨ [Stellar Network](https://developers.stellar.org/)
 with [smart wallets](https://developers.stellar.org/docs/build/apps/smart-wallets)
@@ -24,60 +26,106 @@ Open Zeppelin based NFT `NonFungibleBurnable` for token gating access to APIs in
 
 **Path:** `contracts/arbitrage-apes`
 
-### Build and Deploy your Smart Contract
+## Local Environment Setup
 
 [Local environment setup](https://developers.stellar.org/docs/build/smart-contracts/getting-started) is step one!
 For support, visit our [Discord](https://discord.gg/stellardev).
 
-**Deploy Arbitrage Apes Smart Contract:**
+You can either follow the steps above or use the attached `.devcontainer` configuration.
+ 
+**IMPORTANT!**
+> Ensure you are in the root directory of your project!
+```bash
+echo $PWD && echo "export ARBITRAGE_APES_ROOT=$PWD" && echo "ARBITRAGE_APES_ROOT=$PWD" >> .env
+```
+This command SHOULD print out your project root:
+`/Users/chris.anatalio/projects/stellar-arbitrage-apes-future-yacht-club`
+NOTE:  You should be in your project root when you open your IDE by default otherwise your workspace is 
+misconfigured! `cd` to project root or re-open your repo as a new project in your IDE.
 
-**Setup Identity and Env**
+Verify your workspace is configured correctly.  Note, expected node version varies by client front-end impl.
+If you need help with node/npm setup:  https://code.visualstudio.com/docs/nodejs/nodejs-tutorial
+```bash
+stellar --version && rustc --version && cargo version && nvm current && cat .env && echo $ARBITRAGE_APES_ROOT
+```
+**Do not progress until you have your local env setup correctly!!**
+
+----
+
+Your project lifecycle will consist of setup, config, build and deploy steps presented as 4 steps implemented as four 
+distinct commands.
+1. Setup Stellar accounts and env
+2. Build Contract
+3. Deploy contract and setup env
+4. Configure contract bindings for UI
+
+**During active development**
+Upgrading your deployed contract
+
+---
+
+## STEP 1: Setup Identity and Env
 
 - Set CLI to use testnet by default
 - Generate and fund Testnet key
 - Use as default source account for future CLI Commands
-- Store in `.env` as `ARBITRAGE_APES_OWNER`:
-- Export ENV var ARBITRAGE_APES_OWNER globally(may require terminal restart)
+- Store in `.env` as `ARBITRAGE_APES_OWNER`
+- Set name of contract in `.env`
+- Set your project root
 
+
+
+**Setup aliases for step 1 scripts**
 ```bash
-stellar network use testnet && \
-stellar keys generate --global arbitrage-contract-owner-admin --network testnet --fund && 
-stellar keys use arbitrage-contract-owner-admin && \
-stellar keys address arbitrage-contract-owner-admin && \
-stellar keys address arbitrage-contract-owner-admin | xargs -0 -I {} echo "ARBITRAGE_APES_OWNER={}" >> .env && source .env && \
-echo "export ARBITRAGE_APES_OWNER=${ARBITRAGE_APES_OWNER}" && \
-echo SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin > .env && echo "export SOURCE_ACCOUNT_CLI_NAME=arbitrage-contract-owner-admin"
+alias step1_auto="./init/step1_auto.sh" && alias step1_print="./init/step1_manual.sh" && \
+alias step_verify="./init/step1_verify.sh"
 ```
 
-**Build contract:**
+**Auto-configuration:**
+```bash
+step1_auto
+```
 
+**Or print out the commands to execute on your own:**
+```
+step1_print
+```
+
+**Verify your Stellar Dev Env is setup correctly:**
+```bash
+step1_verify
+```
+
+----
+
+## STEP 2: Build contract
+
+- Update your contract
 - Build contract to standard location:  `target/wasm32v1-none/release/arbitrage_apes.wasm`
 - Using release profile
 - Use `printenv CARGO_BUILD_RUSTFLAGS` to view build parameters
-- Sets metadata on the contract base `NonFungibleBurnable`
 
 ```bash
 stellar contract build --verbose --profile release
 ```
 
-**Deploy Contract and Update Env**
+----
+
+## STEP 3: Deploy Contract and Update Env
 
 - Import source to use env vars in Stellar CLI
 - Deploy contract from built wasm
 - Sets contract alias `arbitrage-apes-contract`
+- Set contract metadata
 
 ```bash
-source .env && stellar contract deploy --alias arbitrage-apes-contract  \
---wasm target/wasm32v1-none/release/arbitrage_apes.wasm \
---source $SOURCE_ACCOUNT_CLI_NAME \
---network testnet \
--- --owner $ARBITRAGE_APES_OWNER \
- >> contract-address.log | xargs -0 -I {} echo "DEPLOYED_ARBITRAGE_APES_CONTRACT={}" >> .env && source .env && \
-echo "export DEPLOYED_ARBITRAGE_APES_CONTRACT=${DEPLOYED_ARBITRAGE_APES_CONTRACT}"
+alias step3_auto="./init/step3_auto.sh" && alias step3_print="./init/step3_manual.sh" && \
+alias step3_verify="./init/step3_verify.sh"
 ```
 
 This will also set the following metadata on your contract:
 
+Or whatever update it to:
 ```json
 {
   "base_uri": "www.arbitrage-apes.xyz",
@@ -85,6 +133,34 @@ This will also set the following metadata on your contract:
   "symbol": "AAYC"
 }
 
+```
+
+**Auto-configuration:**
+```bash
+step3_auto
+```
+
+**Or print out the commands to execute on your own:**
+```
+step3_print
+```
+
+**Verify your Contract is deployed correctly:**
+```bash
+step3_verify
+```
+
+----
+
+## STEP 4: Generate Contracts Bindings
+
+```bash
+source .env && stellar contract bindings typescript \
+--network testnet \
+--id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
+--output-dir ./packages/$ARBITRAGE_APES_CONTRACT_NAME \
+--overwrite && \
+ npm link 
 ```
 
 ---
@@ -141,10 +217,7 @@ How data is stored is an important consideration!
 Unique key with which to store or retrieve data.
 
 ```rust
-#[contracttype]
-pub enum Storage {
-	Chat(u32) // : ChatMessage
-}
+
 ```
 
 - [Enums in Rust](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html) define an enumeration, a limited set
@@ -153,8 +226,8 @@ pub enum Storage {
 - This custom data type acts as a key to look up a stored value
 - The `Chat` type is associated with a `u32`(unsigned 32-bit int)
 
-All together, this gives us a unique, namedspaced custom data type to function as a key
-to store and retrieve `ChatMessage` values from storage
+All together, this gives us a unique, named-spaced custom data type to function as a key
+to store and retrieve `ChatMessage` values from storage.
 
 Using the Data Key in the format `Namespace::Variant(Associated value)`:
 
