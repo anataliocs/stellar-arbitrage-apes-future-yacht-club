@@ -29,6 +29,9 @@ importers:
       arbitrage-apes:
         specifier: link:packages/arbitrage-apes
         version: link:packages/arbitrage-apes
+      create-next-app:
+        specifier: ^15.3.2
+        version: 15.3.2
       passkey-kit:
         specifier: ^0.10.22
         version: 0.10.22
@@ -450,6 +453,11 @@ packages:
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
+
+  create-next-app@15.3.2:
+    resolution: {integrity: sha512-GhUWjJTPfu5yi/qt502JU1GDxog6JLMz2Wb7KjeeRWVae/27WAjcKHe4zwYXfnv7RsiyjdafwwLH9aJ5E5t2oQ==}
+    engines: {node: '>=18.18.0'}
+    hasBin: true
 
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
@@ -1075,6 +1083,8 @@ snapshots:
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
+
+  create-next-app@15.3.2: {}
 
   csstype@3.1.3: {}
 

@@ -19,6 +19,7 @@
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "arbitrage-apes": "link:packages/arbitrage-apes",
+    "create-next-app": "^15.3.2",
     "passkey-kit": "^0.10.22"
   }
 }

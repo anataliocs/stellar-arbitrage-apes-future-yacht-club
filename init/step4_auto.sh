@@ -7,7 +7,7 @@ clear
 test .env
 source .env
 
-printf "\n Executing Step 3 of the Setup and Build Process \n"
+printf "\n Executing Step 4 of the Setup and Build Process \n"
 printf "\n ------------------------- \n"
 
 if test -f ".env"; then
@@ -16,6 +16,9 @@ sed -i ".old" '/^ARBITRAGE_APES_CONTRACT_BINDINGS=.*$/d' .env
 
 printf "\n Removing previous ARBITRAGE_APES_LAUNCHTUBE_TOKEN and archiving to .env.old \n"
 sed -i ".old" '/^ARBITRAGE_APES_LAUNCHTUBE_TOKEN=.*$/d' .env
+
+printf "\n Removing previous ARBITRAGE_APES_CLIENT_ROOT and archiving to .env.old \n"
+sed -i ".old" '/^ARBITRAGE_APES_CLIENT_ROOT=.*$/d' .env
 
 else
   touch .env
@@ -53,8 +56,16 @@ echo "ARBITRAGE_APES_LAUNCHTUBE_TOKEN=$launchtube_token" >> .env
 printf "\n Launchtube Token: %s \n" "$launchtube_token"
 
 printf "\n Set client directory \n"
-client_directory="$ARBITRAGE_APES_ROOT/client/$ARBITRAGE_APES_ROOT/"
+client_directory="$ARBITRAGE_APES_ROOT/client/apps/$ARBITRAGE_APES_ROOT/"
 echo "ARBITRAGE_APES_CLIENT_ROOT=$client_directory" >> .env
+
+printf "\n Contract bindings are typescript definitions you can use to interact with your contract \n"
+printf "\n ------------------------- \n"
+
+printf "\n ------------------------- \n"
+cat $ARBITRAGE_APES_CONTRACT_BINDINGS/src/index.ts
+printf "\n ------------------------- \n"
+
 
 # Confirmation of Success
 

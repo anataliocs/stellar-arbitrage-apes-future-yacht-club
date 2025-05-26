@@ -14,8 +14,11 @@ sed -i ".old" '/^SOURCE_ACCOUNT_CLI_NAME=.*$/d' .env
 printf "\n Removing previous ARBITRAGE_APES_CONTRACT_NAME and archiving to .env.old \n"
 sed -i ".old" '/^ARBITRAGE_APES_CONTRACT_NAME=.*$/d' .env
 
-printf "\n Removing previous ARBITRAGE_APES_ROOT and archiving to .env.old \n"
-sed -i ".old" '/^ARBITRAGE_APES_ROOT=.*$/d' .env
+printf "\n Removing previous TESTNET_RPC_URL and archiving to .env.old \n"
+sed -i ".old" '/^TESTNET_RPC_URL=.*$/d' .env
+
+printf "\n Removing previous TESTNET_NETWORK_PASSPHRASE and archiving to .env.old \n"
+sed -i ".old" '/^TESTNET_NETWORK_PASSPHRASE=.*$/d' .env
 
 else
   touch .env
@@ -56,6 +59,12 @@ echo SOURCE_ACCOUNT_CLI_NAME=$default_source_account >> .env && echo "export
 SOURCE_ACCOUNT_CLI_NAME=$default_source_account" && \
 echo "export ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name" && echo \
 ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name >> .env
+
+echo "export TESTNET_RPC_URL=https://soroban-testnet.stellar.org" && echo \
+"TESTNET_RPC_URL=https://soroban-testnet.stellar.org" >> .env
+
+echo "export TESTNET_NETWORK_PASSPHRASE=Test SDF Network ; September 2015" && echo \
+"TESTNET_NETWORK_PASSPHRASE=Test SDF Network ; September 2015" >> .env
 
 printf "\n Step 1 of Config Complete \n"
 printf "\n ------------------------- \n"

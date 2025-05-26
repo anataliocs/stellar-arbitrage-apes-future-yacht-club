@@ -96,10 +96,13 @@ Upgrading your deployed contract
 2. `manual` print out commands to execute
 
 **Setup aliases for step 1 scripts**
-- These will not persist through terminal sessions.
+- These will not persist through terminal sessions. 
 ```bash
 alias step1_auto="./init/step1_auto.sh" && alias step1_print="./init/step1_manual.sh" && \
 alias step1_verify="./init/step1_verify.sh"
+
+# To set them for all 4 steps at once
+./alias.sh
 ```
 
 **Auto-configuration:**
@@ -213,7 +216,7 @@ step3_verify
 - Sets your launchtube token in your .env as `ARBITRAGE_APES_LAUNCHTUBE_TOKEN`
 
 ```bash
-alias step4_auto="./init/step4_auto.sh" && alias step3_print="./init/step4_manual.sh" && \
+alias step4_auto="./init/step4_auto.sh" && alias step4_print="./init/step4_manual.sh" && \
 alias step4_verify="./init/step4_verify.sh"
 ```
 
@@ -239,9 +242,41 @@ step4_verify
 - Deployed your contract bindings and use `npm link` which add the package `node_modules`
 
 
-**Next Steps:** Modify your NFT Contract code and Upgrade the Contract 
+----
+
+## Now a Reward for your Hard Work:  Mint your first Soroban NFT!
+
+
+```bash
+source .env && stellar contract invoke \
+    --id CBUMOJAEAPLQUCWVIM6HJH5XKXW5OP7CRVOOYMJYSTZ6GFDNA72O2QW6 \
+    --source alice2 \
+    -- \
+    send \
+    --author GDCJMCMYNDZ2FV6UMSEYRMUSCX53KCG2AWPBFQ24EA2FFYBCEDMFCBCV \
+    --message new-mesg-test2
+```
+
+
+
+
+**Next Steps:** 
+- Modify your NFT Contract code and Upgrade the Contract 
+- Bootstrap your UI
 
 ----
+
+## Opinionated Front-end Client Creation
+
+The method of UI creation I'm using in this case is a template that is actively maintained, 500+ deployments, and full 
+test suite to ensure that static analysis is followed and test generation is successful and 218 github stars
+- https://nextjs-boilerplate-hadrysm.vercel.app/
+- https://github.com/hadrysm/nextjs-boilerplate
+
+If you preferred another UI framework, go ahead and build with whatever you prefer!
+
+Generate basic UI skeleton
+
 
 
 ## Arbitrage Apes Walkthrough
@@ -311,8 +346,7 @@ to store and retrieve `ChatMessage` values from storage.
 Using the Data Key in the format `Namespace::Variant(Associated value)`:
 
 ```rust
-let mut index: u32 = 1;
-Storage::Chat(index)
+
 ```
 
 **Storage Value Type Definition:**
@@ -320,12 +354,7 @@ Storage::Chat(index)
 Defines the interface for storing data.
 
 ```rust
-#[contracttype]
-pub struct ChatMessage {
-	author: Address,
-	message: String,
-	timestamp: u64,
-}
+
 ```
 
 - [Structs in Rust](https://doc.rust-lang.org/book/ch05-01-defining-structs.html) define a type with multiple named
@@ -348,11 +377,7 @@ pub struct ChatMessage {
 **Instanciate a `ChatMessage` instance to store:**
 
 ```rust
-ChatMessage {
-author,
-message,
-timestamp: env.ledger().timestamp(),
-}
+
 ```
 
 #### Storing Soroban Data using the `Env` Interface
@@ -360,14 +385,6 @@ timestamp: env.ledger().timestamp(),
 How to store data on-chain:
 
 ```rust
-env.storage().temporary().set::<Storage, ChatMessage>(
-& Storage::Chat(next_index),
-& ChatMessage {
-author,
-message,
-timestamp: env.ledger().timestamp(),
-}
-);
 
 ```
 
@@ -400,7 +417,7 @@ Review line 24 in the contract, `contracts/snapchain/src/lib.rs`
 The `require_auth` statement controls access to who can invoke this function.
 
 ```rust
-author.require_auth();
+owner.require_auth();
 ```
 
 - Ensures the `Address` has authorized the current invocation(including all the invocation arguments)
