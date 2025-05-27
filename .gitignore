@@ -29,3 +29,8 @@ target
 /.env.env.old
 /packages/arbitrage-apes/*
 /.env.old
+
+
+# Added by cargo
+
+/target

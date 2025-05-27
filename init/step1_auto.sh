@@ -28,6 +28,10 @@ echo "ARBITRAGE_APES_ROOT=$PWD" >> .env
 
 default_contract_name="arbitrage-apes"
 
+default_rpc="https://soroban-testnet.stellar.org"
+
+default_network_passphrase='"Test SDF Network ; September 2015"'
+
 account_suffix=$(date +%s%N)
 
 default_source_account="arbitrage-contract-owner-admin-new-$account_suffix"
@@ -51,18 +55,24 @@ stellar keys address $default_source_account
 printf "\n Executing:  stellar keys address %s \n" "$default_source_account"
 stellar keys address $default_source_account | xargs -0 -I {} echo "ARBITRAGE_APES_OWNER={}" |tee .env && source .env
 
-printf "\n Exporting .env vars \n"
-echo "export ARBITRAGE_APES_OWNER=${ARBITRAGE_APES_OWNER}" && \
-echo SOURCE_ACCOUNT_CLI_NAME=$default_source_account >> .env && echo "export
-SOURCE_ACCOUNT_CLI_NAME=$default_source_account" && \
-echo "export ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name" && echo \
-ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name >> .env
+printf "\n Exporting %s \n" "ARBITRAGE_APES_OWNER"
+echo "export ARBITRAGE_APES_OWNER=${ARBITRAGE_APES_OWNER}"
 
-echo "export TESTNET_RPC_URL=https://soroban-testnet.stellar.org" && echo \
-"TESTNET_RPC_URL=https://soroban-testnet.stellar.org" >> .env
+printf "\n Exporting %s \n" "SOURCE_ACCOUNT_CLI_NAME"
+echo SOURCE_ACCOUNT_CLI_NAME=$default_source_account >> .env
+echo "export SOURCE_ACCOUNT_CLI_NAME=$default_source_account"
 
-echo 'export TESTNET_NETWORK_PASSPHRASE=Test SDF Network ; September 2015' && echo \
-"TESTNET_NETWORK_PASSPHRASE='Test SDF Network ; September 2015' >> .env"
+printf "\n Exporting %s \n" "ARBITRAGE_APES_CONTRACT_NAME"
+echo "export ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name"
+echo ARBITRAGE_APES_CONTRACT_NAME=$default_contract_name >> .env
+
+printf "\n Exporting %s \n" "TESTNET_RPC_URL"
+echo "export TESTNET_RPC_URL=$default_rpc"
+echo TESTNET_RPC_URL=$default_rpc >> .env
+
+printf "\n Exporting %s \n" "TESTNET_NETWORK_PASSPHRASE"
+echo "export TESTNET_NETWORK_PASSPHRASE=$default_network_passphrase"
+echo TESTNET_NETWORK_PASSPHRASE=$default_network_passphrase >> .env
 
 printf "\n Step 1 of Config Complete \n"
 printf "\n ------------------------- \n"

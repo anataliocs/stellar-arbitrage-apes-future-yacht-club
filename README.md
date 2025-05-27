@@ -251,13 +251,17 @@ step4_verify
 
 
 ```bash
+
+
+
 source .env && stellar contract invoke \
     --id CBUMOJAEAPLQUCWVIM6HJH5XKXW5OP7CRVOOYMJYSTZ6GFDNA72O2QW6 \
     --source alice2 \
     -- \
-    send \
-    --author GDCJMCMYNDZ2FV6UMSEYRMUSCX53KCG2AWPBFQ24EA2FFYBCEDMFCBCV \
-    --message new-mesg-test2
+    set_nft_meta \
+	--base_uri "$DEPLOYED_ARBITRAGE_APES_META_BASE_URI" \
+	--name "$DEPLOYED_ARBITRAGE_APES_META_NAME" \
+	--symbol "$DEPLOYED_ARBITRAGE_APES_META_SYMBOL
 ```
 
 

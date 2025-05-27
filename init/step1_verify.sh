@@ -5,7 +5,7 @@ set -e
 test .env
 
 printf "\n Local .env \n -- \n"
-printf "\n Ensure ARBITRAGE_APES_OWNER SOURCE_ACCOUNT_CLI_NAME and ARBITRAGE_APES_CONTRACT_NAME are set correctly  \n"
+printf "\n Ensure ARBITRAGE_APES_OWNER SOURCE_ACCOUNT_CLI_NAME and ARBITRAGE_APES_CONTRACT_NAME TESTNET_RPC_URL TESTNET_NETWORK_PASSPHRASE are set correctly  \n"
 printf "\n ------------------------- \n"
 cat .env
 printf "\n ------------------------- \n"

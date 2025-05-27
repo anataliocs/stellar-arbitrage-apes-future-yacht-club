@@ -27,12 +27,12 @@ pub enum ArbitrageApeYachtClubError {
 
 #[contractimpl]
 impl ArbitrageApeYachtClub {
-    pub fn __constructor(e: &Env, owner: Address, base_uri: String, name: String, symbol: String) {
+    pub fn __constructor(e: &Env, owner: Address) {
         Base::set_metadata(
             e,
-            base_uri,
-            name,
-            symbol,
+            String::from_str(e, "www.stellar-arbitrage-apes.xyz"),
+            String::from_str(e, "Stellar Arbitrage Ape Yacht Club"),
+            String::from_str(e, "SAAYC"),
         );
         e.storage()
             .instance()
@@ -52,6 +52,13 @@ impl ArbitrageApeYachtClub {
         e.storage()
             .instance()
             .get::<Symbol, u32>(&VERSION).expect("version should be set")
+    }
+
+    pub fn set_nft_meta(e: &Env, base_uri: String, name: String, symbol: String) {
+        let owner: Address = e.storage().instance().get(&OWNER).expect("owner should be set");
+        owner.require_auth();
+
+        Base::set_metadata(e, base_uri, name, symbol);
     }
 
     pub fn upgrade(e: &Env, new_wasm_hash: BytesN<32>) {
