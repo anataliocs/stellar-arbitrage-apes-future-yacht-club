@@ -54,7 +54,7 @@ echo "ARBITRAGE_APES_LAUNCHTUBE_TOKEN=$launchtube_token" >> .env
 printf "\n Launchtube Token: %s \n" "$launchtube_token"
 
 printf "\n Set client directory \n"
-client_directory="$ARBITRAGE_APES_ROOT/client/apps/$ARBITRAGE_APES_ROOT/"
+client_directory="$ARBITRAGE_APES_ROOT/client/apps/$ARBITRAGE_APES_ROOT"
 echo "ARBITRAGE_APES_CLIENT_ROOT=$client_directory" >> .env
 
 printf "\n Contract bindings are typescript definitions you can use to interact with your contract \n"

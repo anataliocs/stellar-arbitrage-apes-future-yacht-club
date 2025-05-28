@@ -185,12 +185,6 @@ The following metadata will be set in your contract:
   "name": "Stellar Arbitrage Ape Yacht Club",
   "symbol": "SAAYC"
 }
-
-This metadata can be updated by updating the following in `init/step3_auto.sh` or by executing the command manually
-```
-default_contract_meta_base_uri="www.stellar-arbitrage-apes.xyz"
-default_contract_meta_name="Arbitrage Ape Yacht Club"
-default_contract_meta_symbol="SAAYC"
 ```
 
 **Auto-configuration:**
@@ -247,25 +241,133 @@ step4_verify
 
 ----
 
-## Now a Reward for your Hard Work:  Mint your first Soroban NFT!
+## Invoking your Deployed Contract
+Now let's use the Stellar CLI to invoke your deployed contract.
 
+### A Reward for your Hard Work: Mint your first Soroban NFT!
+- The id of the deployed contract, our default source account and the public key are stored in our `.env` file
+- We call the `stellar contract invoke` Stellar CLI function here with our `.env` file
+- Which will invoke the `mint()` function passing in the Owner public key as the recipient
+- We are passing in the token_id which we will update to be dynamically generated later on
 
+**Execute this command:**
 ```bash
-
-
-
 source .env && stellar contract invoke \
-    --id CBUMOJAEAPLQUCWVIM6HJH5XKXW5OP7CRVOOYMJYSTZ6GFDNA72O2QW6 \
-    --source alice2 \
+    --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
+    --source $SOURCE_ACCOUNT_CLI_NAME \
     -- \
-    set_nft_meta \
-	--base_uri "$DEPLOYED_ARBITRAGE_APES_META_BASE_URI" \
-	--name "$DEPLOYED_ARBITRAGE_APES_META_NAME" \
-	--symbol "$DEPLOYED_ARBITRAGE_APES_META_SYMBOL
+    mint \
+    --to $ARBITRAGE_APES_OWNER \
+	--token_id 132
 ```
 
+#### Emitted Events
+- The contract contains logic to emit events when important things like `mint()` function invocations occur
+- Events can be used by your dapp, by indexers, by [Open Zeppelin Monitor](https://github.com/OpenZeppelin/openzeppelin-monitor)
+- Events provide a summary of important data from a `mint()` function invocation for instance
+- Check out the [Stellar CLI manual for more info](https://developers.stellar.org/docs/tools/cli/stellar-cli#stellar-events)
+```bash
+source .env && stellar events --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
+--start-ledger 1206843 --output json 
+```
+> **TODO:**
+> - TODO Capture first minted transaction ledger to store in .env as START_LEDGER
+> - TODO Store emitted events in JSON format for use in test mocking and cache pre-warm
 
+**Default Output type(pretty):**
+```
+Event 0005183355511390208-0000000001 [CONTRACT]:
+  Ledger:   1206844 (closed at 2025-05-28T15:12:48Z)
+  Contract: CANPLB5YZIPWR764C6TUYYHF5RJPIG232O3YLKCE5KV5OBWKRGGTCAGI
+  Topics:
+            Symbol(ScSymbol(StringM(mint)))
+            Address(Account(AccountId(PublicKeyTypeEd25519(Uint256(bc11fc3834b4c0c82ab9df57e951a5bc4546f62432e2a8dd9615c01e59de0adc)))))
+  Value: U32(132)
+```
 
+**Output type(json):**
+```json
+{
+  "type": "contract",
+  "ledger": 1206844,
+  "ledgerClosedAt": "2025-05-28T15:12:48Z",
+  "id": "0005183355511390208-0000000001",
+  "pagingToken": "0005183355511390208-0000000001",
+  "contractId": "CANPLB5YZIPWR764C6TUYYHF5RJPIG232O3YLKCE5KV5OBWKRGGTCAGI",
+  "topic": [
+    "AAAADwAAAARtaW50",
+    "AAAAEgAAAAAAAAAAvBH8ODS0wMgqud9X6VGlvEVG9iQy4qjdlhXAHlneCtw="
+  ],
+  "value": "AAAAAwAAAIQ="
+}
+```
+> **TODO:**
+> - TODO Provide utility helper for decoding XDR in event
+
+Later in the tutorial, we will walk through how to display events in your UI.
+
+----
+
+### What is an NFT?
+- It's an unique digital assets with verifiable ownership
+- It can represent much more then just an image as we commonly see
+- In this demo, we are using the [Open Zeppelin NFT implementation](https://docs.openzeppelin.com/stellar-contracts/0.2.0/tokens/non-fungible)
+- NFTs can represent many different things:
+  - **Digital Access:** Access to a API, private site or forum or a set of data
+  - **Physical Access:** Access to an event functioning as a unique, verifiable digital ticket
+  - **Digital Status:** Digital identity as a member of a rewards program
+  - **Physical Status:** Access to physical rewards like swag
+  - **Digital Ownership:** Which could grant you access to a movie, game or song
+  - **Physical Ownership:** Acting as a "receipt" to receive a consumer good
+  - **Digital Credential:** Verifiable certificate that you successfully completed a course
+  - **Physical Credential:** Grants you access to receive a physical representation of a credential
+
+**The Real Potential of NFTs**
+- Combining these various traits unlocks new features and functionality for users
+- **Example:**
+  - Completing a course grants you a credential but also grants you access to a developer rewards program
+  - Which grants you access to in-person swag and event
+  - Which can earn you digital points which then can upgrade your membership level
+  - Which grants you access to special training materials online
+  - And also grants you to a special Discord channel
+  - And grants you access to blockchain infrastructure like Relayers, Oracles, dedicated RPC servers, indexers etc.
+  - Identifies your account on-chain for special invites like sending you a NFT ticket to an event directly
+  - And can be linked to other digital identities like your Github, Discord, email, Twitter etc.
+  - Or even linked to other on-chain NFTs or even a contract or UI deployment for instance
+  - The possibilities are endless!
+
+**Concrete Example:  Open Source Software Funding**
+- Your NFT linked to your entire developer identity and history is linked to a specific github repo
+- This repo is an OSS package that provides a lot of value to the community
+- Other developers can buy you a coffee as a thank-you by sending a transaction to your linked account
+
+----
+
+### Customizing your NFT contract
+
+Let's update the metadata on the contract to make it truly yours.
+1. Update the contract
+2. Re-build the contract
+3. Upgrade the deployed contract
+4. Re-generate contract bindings
+
+#### Updating the Contract
+
+Open up the contract `contracts/arbitrage-apes/src/contract.rs`
+Modify 
+
+```
+**Execute this command:**
+```bash
+source .env && stellar contract invoke \
+    --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
+    --source $SOURCE_ACCOUNT_CLI_NAME \
+    -- \
+    mint \
+    --to $ARBITRAGE_APES_OWNER \
+	--token_id 132
+```
+```
 
 **Next Steps:** 
 - Modify your NFT Contract code and Upgrade the Contract 
