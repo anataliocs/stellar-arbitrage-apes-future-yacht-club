@@ -304,6 +304,7 @@ Event 0005183355511390208-0000000001 [CONTRACT]:
 ```
 > **TODO:**
 > - TODO Provide utility helper using Stellar CLI for decoding XDR in event
+> - Show how to view/decode events on Stellar lab
 
 Later in the tutorial, we will walk through how to display events in your UI.
 
@@ -355,6 +356,35 @@ We will now create a backend to provide data for your UI.
 ```
 cd backend/arbitrage-apes-backend
 
+
+
+```
+
+Backend:
+- Using SSE
+- Moves complex code from front-end to backend
+- Push HTML code to front-end
+
+Front-end -> Single index.html file
+```html
+<script type="text/javascript">
+    const eventSource = new EventSource('/sse');
+    eventSource.onmessage = ({ data }) => {
+      const message = document.createElement('li');
+      message.innerText = 'New message: ' + data;
+      document.body.appendChild(message);
+    }
+</script>
+```
+
+Backend
+```
+  @Sse('sse')
+  sse(): Observable<MessageEvent> {
+    return interval(1000).pipe(
+      map((_) => ({ data: { hello: 'world' } }) as MessageEvent),
+    );
+  }
 ```
 
 
