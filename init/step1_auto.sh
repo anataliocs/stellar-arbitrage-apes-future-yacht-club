@@ -38,8 +38,6 @@ default_source_account="arbitrage-contract-owner-admin-new-$account_suffix"
 
 printf "\n Generated name for default_source_account: %s \n" "$default_source_account"
 
-printf "\n Deploying contract to testnet \n"
-
 printf "\n Executing:  stellar network use testnet \n"
 stellar network use testnet
 
@@ -52,7 +50,6 @@ stellar keys use $default_source_account
 printf "\n Executing:  stellar keys address %s \n" "$default_source_account"
 stellar keys address $default_source_account
 
-printf "\n Executing:  stellar keys address %s \n" "$default_source_account"
 stellar keys address $default_source_account | xargs -0 -I {} echo "ARBITRAGE_APES_OWNER={}" |tee .env && source .env
 
 printf "\n Exporting %s \n" "ARBITRAGE_APES_OWNER"
@@ -78,7 +75,9 @@ printf "\n Step 1 of Config Complete \n"
 printf "\n ------------------------- \n"
 
 printf "\n Generated .env file: \n"
+printf "\n ------------------------- \n"
 cat .env
+printf "\n ------------------------- \n"
 
 printf "\n Old Config Archived in .env.old \n"
 

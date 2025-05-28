@@ -25,7 +25,7 @@ fi
 generate_bindings="source .env && stellar contract bindings typescript \
 --network testnet \
 --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
---output-dir ./packages/$ARBITRAGE_APES_CONTRACT_NAME \
+--output-dir packages/$ARBITRAGE_APES_CONTRACT_NAME \
 --overwrite"
 
 printf "\n Executing command: %s \n" "$generate_bindings"
@@ -33,7 +33,7 @@ printf "\n Executing command: %s \n" "$generate_bindings"
 source .env && stellar contract bindings typescript \
 --network testnet \
 --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
---output-dir ./packages/$ARBITRAGE_APES_CONTRACT_NAME \
+--output-dir packages/$ARBITRAGE_APES_CONTRACT_NAME \
 --overwrite
 
 bindings_path="packages/$ARBITRAGE_APES_CONTRACT_NAME"
@@ -49,6 +49,8 @@ source .env && pnpm link "$ARBITRAGE_APES_ROOT/$ARBITRAGE_APES_CONTRACT_BINDINGS
 
 printf "\n Generate and set Launchtube Token \n"
 launchtube_token=$(curl https://testnet.launchtube.xyz/gen | jq '.[0]' | xargs echo -n)
+
+printf "\n Exporting ARBITRAGE_APES_LAUNCHTUBE_TOKEN to .env var \n"
 echo "ARBITRAGE_APES_LAUNCHTUBE_TOKEN=$launchtube_token" >> .env
 
 printf "\n Launchtube Token: %s \n" "$launchtube_token"

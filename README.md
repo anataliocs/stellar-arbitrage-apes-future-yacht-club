@@ -139,6 +139,10 @@ alias step2_auto="./init/step2_auto.sh" && alias step2_print="./init/step2_manua
 alias step2_verify="./init/step2_verify.sh"
 ```
 
+>NOTE: cdylibs are cross-platform and create: *.so files on Linux, *.dylib files on macOS, and *.dll files on Windows.
+
+>NOTE:  Open Zeppelin contracts use Rust 1.84 and --target=wasm32v1-none
+
 **Auto-configuration:**
 - Care was taken to make scripts portable
 - Windows users will need WSL and bash
@@ -201,6 +205,7 @@ step3_print
 ```bash
 step3_verify
 ```
+> - TODO add stellar contract info to verify step
 
 ----
 
@@ -209,8 +214,7 @@ step3_verify
 - Use Stellar CLI to generate contract bindings using .env vars
 - Sets the output package to ARBITRAGE_APES_CONTRACT_NAME
 - Sets Deployed contract address to DEPLOYED_ARBITRAGE_APES_CONTRACT
-- Sets NFT metadata in your contract
-- Sets your launchtube token in your .env as `ARBITRAGE_APES_LAUNCHTUBE_TOKEN`
+- Sets your launch-tube token in your .env as `ARBITRAGE_APES_LAUNCHTUBE_TOKEN`
 
 ```bash
 alias step4_auto="./init/step4_auto.sh" && alias step4_print="./init/step4_manual.sh" && \
@@ -227,17 +231,15 @@ step4_auto
 step4_print
 ```
 
-**Verify your Contract is deployed correctly:**
+**Verify your Contract bindings are generated and linked correctly:**
 ```bash
 step4_verify
 ```
-
 
 **Review**
 - Your .env file with everything you need to build a dapp around your Open Zeppelin NFT Contract
 - Built and deployed your contract and stored the results in `contract-address.log` and `contract-build.log`
 - Deployed your contract bindings and use `npm link` which add the package `node_modules`
-
 
 ----
 
@@ -270,8 +272,7 @@ source .env && stellar contract invoke \
 source .env && stellar events --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
 --start-ledger 1206843 --output json 
 ```
-> **TODO:**
-> - TODO Capture first minted transaction ledger to store in .env as START_LEDGER
+> - TODO Capture the first minted transaction ledger to store in .env as START_LEDGER
 > - TODO Store emitted events in JSON format for use in test mocking and cache pre-warm
 
 **Default Output type(pretty):**
@@ -302,7 +303,7 @@ Event 0005183355511390208-0000000001 [CONTRACT]:
 }
 ```
 > **TODO:**
-> - TODO Provide utility helper for decoding XDR in event
+> - TODO Provide utility helper using Stellar CLI for decoding XDR in event
 
 Later in the tutorial, we will walk through how to display events in your UI.
 
@@ -336,14 +337,33 @@ Later in the tutorial, we will walk through how to display events in your UI.
   - Or even linked to other on-chain NFTs or even a contract or UI deployment for instance
   - The possibilities are endless!
 
-**Concrete Example:  Open Source Software Funding**
+**Concrete Example: Open Source Software Funding**
 - Your NFT linked to your entire developer identity and history is linked to a specific github repo
 - This repo is an OSS package that provides a lot of value to the community
 - Other developers can buy you a coffee as a thank-you by sending a transaction to your linked account
 
+**Next Steps:** 
+- Modify your NFT Contract code and Upgrade the Contract 
+- Bootstrap your UI
+
 ----
 
-### Customizing your NFT contract
+## NFT dapp Backend
+
+We will now create a backend to provide data for your UI.
+
+```
+cd backend/arbitrage-apes-backend
+
+```
+
+
+
+----
+
+## Customizing your NFT contract
+
+### Workflow
 
 Let's update the metadata on the contract to make it truly yours.
 1. Update the contract
@@ -354,9 +374,8 @@ Let's update the metadata on the contract to make it truly yours.
 #### Updating the Contract
 
 Open up the contract `contracts/arbitrage-apes/src/contract.rs`
-Modify 
+Modify
 
-```
 **Execute this command:**
 ```bash
 source .env && stellar contract invoke \
@@ -367,13 +386,6 @@ source .env && stellar contract invoke \
     --to $ARBITRAGE_APES_OWNER \
 	--token_id 132
 ```
-```
-
-**Next Steps:** 
-- Modify your NFT Contract code and Upgrade the Contract 
-- Bootstrap your UI
-
-----
 
 ## Opinionated Front-end Client Creation
 
@@ -387,49 +399,8 @@ If you preferred another UI framework, go ahead and build with whatever you pref
 Generate basic UI skeleton
 
 
+----
 
-## Arbitrage Apes Walkthrough
-
-**🛠️ Dev Tools**
-
-- 💻 [Stellar CLI](https://developers.stellar.org/docs/tools/cli/install-cli)
-  -
-  Featuring: [Generating Bindings](https://developers.stellar.org/docs/tools/cli/stellar-cli#stellar-contract-bindings)
-- ⚙️ [Stellar Javascript SDK](https://developers.stellar.org/docs/tools/sdks/client-sdks#javascript-sdk)
-	- Featuring: [Stellar RPC Server](https://stellar.github.io/js-stellar-sdk/module-rpc.Server.html)
-- 🔐 [Passkey Kit](https://github.com/kalepail/passkey-kit) - Seamless authentication
-- 🚀 [Launchtube](https://github.com/stellar/launchtube) - Transaction submission and paymaster functionality
-
----
-
-### 🔐 Passkey Kit: Simplifying UX
-
-[Passkey Kit GitHub Repository](https://github.com/kalepail/passkey-kit)
-
-Self-custody is too complicated for users.
-
-**Passkey Kit** streamlines user experience leveraging biometric authentication for signing and
-fine-grained authorization of Stellar transactions
-with [Policy Signers](https://github.com/kalepail/passkey-kit/tree/next/contracts/sample-policy).
-
----
-
-### 🚀 Launchtube: Get your Operation On-Chain
-
-[Launchtube GitHub Repository](https://github.com/stellar/launchtube)
-
-Launchtube is a super cool service that abstracts away the complexity of
-submitting transactions.
-
-1. **Transaction Lifecycle Management**:
-	- Transaction Submission
-	- Retries
-	- Working around rate limits
-
-2. **Paymaster Service**:
-	- Pays transaction fees
-
----
 
 ### Storing Data
 
@@ -526,7 +497,7 @@ Review line 24 in the contract, `contracts/snapchain/src/lib.rs`
 The `require_auth` statement controls access to who can invoke this function.
 
 ```rust
-owner.require_auth();
+
 ```
 
 - Ensures the `Address` has authorized the current invocation(including all the invocation arguments)
