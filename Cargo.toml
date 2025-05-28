@@ -1,14 +1,15 @@
 [workspace]
 resolver = "2"
 members = [
-	"contracts/arbitrage-apes",
+	"contracts/arbitrage-apes*",
 ]
 
 [workspace.dependencies]
 soroban-sdk = "22.0.8"
-quote = "1.0"
-syn = { version = "2.0", features = ["full"] }
+stellar-ownable = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
 stellar-non-fungible = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-default-impl-macro = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
+stellar-ownable-macro = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
 
 [profile.release]
 opt-level = "z"

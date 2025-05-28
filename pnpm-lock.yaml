@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  arbitrage-apes: link:packages/arbitrage-apes
+  arbitrage-apes: link:../../../../packages/arbitrage-apes
 
 importers:
 
@@ -27,8 +27,8 @@ importers:
         specifier: ^19.1.5
         version: 19.1.5(@types/react@19.1.5)
       arbitrage-apes:
-        specifier: link:packages/arbitrage-apes
-        version: link:packages/arbitrage-apes
+        specifier: link:../../../../packages/arbitrage-apes
+        version: link:../../../../packages/arbitrage-apes
       create-next-app:
         specifier: ^15.3.2
         version: 15.3.2

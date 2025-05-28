@@ -34,7 +34,10 @@ name = "arbitrage-apes"
 version = "0.0.1"
 dependencies = [
  "soroban-sdk",
+ "stellar-default-impl-macro",
  "stellar-non-fungible",
+ "stellar-ownable",
+ "stellar-ownable-macro",
 ]
 
 [[package]]
@@ -1281,18 +1284,67 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 [[package]]
 name = "stellar-constants"
 version = "0.2.0"
-source = "git+https://github.com/OpenZeppelin/stellar-contracts#63ec4476d64ec243a87db32033faf8f71772209a"
+source = "git+https://github.com/OpenZeppelin/stellar-contracts#519f7196f06ad1b87730b59fbf89db966fc89102"
 dependencies = [
  "soroban-sdk",
 ]
 
 [[package]]
+name = "stellar-default-impl-macro"
+version = "0.2.0"
+source = "git+https://github.com/OpenZeppelin/stellar-contracts#519f7196f06ad1b87730b59fbf89db966fc89102"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.101",
+]
+
+[[package]]
+name = "stellar-macro-helpers"
+version = "0.2.0"
+source = "git+https://github.com/OpenZeppelin/stellar-contracts#519f7196f06ad1b87730b59fbf89db966fc89102"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.101",
+]
+
+[[package]]
 name = "stellar-non-fungible"
 version = "0.2.0"
-source = "git+https://github.com/OpenZeppelin/stellar-contracts#63ec4476d64ec243a87db32033faf8f71772209a"
+source = "git+https://github.com/OpenZeppelin/stellar-contracts#519f7196f06ad1b87730b59fbf89db966fc89102"
 dependencies = [
  "soroban-sdk",
  "stellar-constants",
+]
+
+[[package]]
+name = "stellar-ownable"
+version = "0.2.0"
+source = "git+https://github.com/OpenZeppelin/stellar-contracts#519f7196f06ad1b87730b59fbf89db966fc89102"
+dependencies = [
+ "soroban-sdk",
+ "stellar-constants",
+ "stellar-role-transfer",
+]
+
+[[package]]
+name = "stellar-ownable-macro"
+version = "0.2.0"
+source = "git+https://github.com/OpenZeppelin/stellar-contracts#519f7196f06ad1b87730b59fbf89db966fc89102"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "stellar-macro-helpers",
+ "syn 2.0.101",
+]
+
+[[package]]
+name = "stellar-role-transfer"
+version = "0.2.0"
+source = "git+https://github.com/OpenZeppelin/stellar-contracts#519f7196f06ad1b87730b59fbf89db966fc89102"
+dependencies = [
+ "soroban-sdk",
 ]
 
 [[package]]
