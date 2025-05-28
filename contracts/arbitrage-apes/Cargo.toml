@@ -16,6 +16,8 @@ stellar-non-fungible = { workspace = true }
 stellar-default-impl-macro = { workspace = true }
 stellar-ownable-macro = { workspace = true }
 stellar-ownable = { workspace = true }
+stellar-upgradeable = { workspace = true }
+stellar-upgradeable-macros = { workspace = true }
 
 [dev-dependencies]
 soroban-sdk = { workspace = true, features = ["testutils"] }

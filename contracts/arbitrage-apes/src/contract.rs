@@ -2,15 +2,16 @@
 // Compatible with OpenZeppelin Stellar Soroban Contracts ^0.2.0
 
 use stellar_default_impl_macro::default_impl;
-use soroban_sdk::{
-	contract, contracterror, contractimpl, symbol_short, Address, BytesN, Env, String, Symbol,
-};
+use soroban_sdk::{contract, contracterror, contractimpl, panic_with_error, symbol_short, Address, BytesN, Env, String, Symbol};
 use stellar_non_fungible::{
 	burnable::NonFungibleBurnable, Base, NonFungibleToken
 };
-use stellar_ownable::{set_owner, Ownable};
+use stellar_ownable::{get_owner, set_owner, Ownable};
 use stellar_ownable_macro::only_owner;
+use stellar_upgradeable::UpgradeableInternal;
+use stellar_upgradeable_macros::Upgradeable;
 
+#[derive(Upgradeable)]
 #[contract]
 pub struct ArbitrageApeYachtClub;
 
@@ -36,6 +37,16 @@ impl ArbitrageApeYachtClub {
 	#[only_owner]
 	pub fn mint(e: &Env, to: Address, token_id: u32) {
 		Base::mint(e, &to, token_id);
+	}
+}
+
+impl UpgradeableInternal for ArbitrageApeYachtClub {
+	fn _require_auth(e: &Env, operator: &Address) {
+		operator.require_auth();
+		let owner = get_owner(e).expect("owner should be set");
+		if *operator != owner {
+			panic_with_error!(e, ArbitrageApeYachtClubError::Unauthorized)
+		}
 	}
 }
 
