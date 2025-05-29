@@ -356,8 +356,6 @@ We will now create a backend to provide data for your UI.
 ```
 cd backend/arbitrage-apes-backend
 
-
-
 ```
 
 Backend:
@@ -387,6 +385,12 @@ Backend
   }
 ```
 
+You may have CORS issues on localhost.
+
+You can try opening Chrome in a sandbox with web security disabled:
+```bash
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome http://localhost:63342/stellar-arbitrage-apes-future-yacht-club/index.html?_ijt=q9fn6vaje10r5bcfgmcmafoo6p&_ij_reload=RELOAD_ON_SAVE --args --disable-web-security --user-data-dir="~/.chrome.dev.session/" --incognito --new-window
+```
 
 
 ----

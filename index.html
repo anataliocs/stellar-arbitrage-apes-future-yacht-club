@@ -3,21 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light">
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="color-scheme" content="dark">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css"
     >
-    <title>SnapChain</title>
+    <script type="text/javascript">
+      const eventSource = new EventSource('http://localhost:3000/api/stellar/mock/event/sse', {
+        withCredentials: false
+      });
+      console.log(eventSource.readyState);
+      console.log(eventSource.url);
+
+      eventSource.onmessage = ( msg ) => {
+        console.log("Received SSE data:" + JSON.stringify(msg));
+        console.log("Received SSE data:" + msg.data);
+        const message = document.createElement('div');
+        message.innerText = 'New message: ' + JSON.stringify(msg.data);
+        document.body.appendChild(message);
+      };
+      eventSource.onerror = (err) => {
+        console.log("Error: " + JSON.stringify(err));
+        const message = document.createElement('div');
+        message.innerText = 'New Error: ' + JSON.stringify(err);
+        document.body.appendChild(message);
+      };
+
+      eventSource.onopen = () => {
+        console.log("SSE connection opened");
+      };
+      eventSource.onclose = () => {
+        console.log("SSE connection closed");
+      };
+    </script>
+    <title>Arbitrage Apes</title>
   </head>
   <body>
     <header class="container-fluid pico-background-pumpkin-50">
       <nav>
         <ul>
-          <li><strong>SnapChain</strong></li>
-        </ul>
-        <ul id="connect-buttons">
+          <li><strong>Arbitrage Apes</strong></li>
         </ul>
       </nav>
     </header>
@@ -26,11 +51,6 @@
       <div id="scroll-anchor"></div>
     </main>
     <footer class="container-fluid pico-background-pumpkin-50">
-      <form id="message-form">
-        <textarea placeholder="type your message here..." id="message" rows="4"></textarea>
-        <button type="submit" id="sendButton" name="sendButton">Send Message</button>
-      </form>
     </footer>
-    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
