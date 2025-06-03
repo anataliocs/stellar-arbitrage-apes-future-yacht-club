@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+    <script type="text/javascript">
+        const eventSource = new EventSource('http://localhost:3000/api/stellar/mock/event/sse/CC6GBNMVYR4SVUDWTIP7KTMGBQF22OJQFTBXHGZKE3LLJPBGIYXIIOL4', {
+          withCredentials: false
+        });
+        console.log(eventSource.readyState);
+        console.log(eventSource.url);
+
+        eventSource.onmessage = ( msg ) => {
+          console.log("Received SSE data:" + msg);
+          console.log("Received SSE data:" + msg.data);
+          const message = document.createElement('div');
+          message.innerText = `New message: ${msg.data}`;
+          document.querySelector('#messages').appendChild(message);
+        };
+        eventSource.onerror = (err) => {
+          console.log("Error: " + JSON.stringify(err));
+          const message = document.createElement('div');
+          message.innerText = 'New Error: ' + JSON.stringify(err);
+          document.body.appendChild(message);
+        };
+
+        eventSource.onopen = () => {
+          console.log("SSE connection opened");
+        };
+        eventSource.onclose = () => {
+          console.log("SSE connection closed");
+        };
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.pumpkin.min.css">
+
+    <title>Arbitrage Apes SSE by Contract ID</title>
+</head>
+<body class="pico-background-pumpkin-30">
+<hgroup>
+    <header class="container-fluid pico-background-pumpkin-50">
+        <h1>Arbitrage Apes</h1>
+        <nav>
+            <ul>
+                <li><strong>Server Sent Events Demo</strong></li>
+                <li>Event Source: http://localhost:3000/api/stellar/mock/event/sse</li>
+            </ul>
+        </nav>
+    </header>
+</hgroup>
+<main class="container">
+    <h3>Emitted Events for Contract ID</h3>
+    <div id="messages">
+
+    </div>
+    <div id="scroll-anchor"></div>
+</main>
+<footer class="container-fluid pico-background-pumpkin-50">
+    Server Sent Events using Contract ID Filter Demo
+</footer>
+</body>
+</html>

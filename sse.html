@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
   <head>
     <script type="text/javascript">
-      const eventSource = new EventSource('http://localhost:3000/api/stellar/mock/event/sse', {
+      const eventSource = new EventSource('http://localhost:3000/api/stellar/mock/event/sse/', {
         withCredentials: false
       });
       console.log(eventSource.readyState);

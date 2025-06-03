@@ -351,11 +351,24 @@ Later in the tutorial, we will walk through how to display events in your UI.
 
 ## NFT dapp Backend
 
-We will now create a backend to provide data for your UI.
+We will now create a backend to provide data for your UI.  We will take a flexible approach to building a dapp
+backend giving your working examples of various way to supply data to your client front-end.
 
+**Run locally**
+https://github.com/anataliocs/arbitrage-apes-backend
 ```
-cd backend/arbitrage-apes-backend
+git clone git@github.com:anataliocs/arbitrage-apes-backend.git
+```
 
+**Choose a Testnet RPC Provider**
+- https://developers.stellar.org/docs/data/apis/api-providers#publicly-accessible-apis
+```dotenv
+STELLAR_RPC_SERVER_URL=https://soroban-testnet.stellar.org
+```
+
+**Start locally:**
+```bash
+pnpm start:dev
 ```
 
 Backend:
