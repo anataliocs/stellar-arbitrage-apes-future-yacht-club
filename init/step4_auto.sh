@@ -79,3 +79,9 @@ cat .env
 printf "\n ------------------------- \n"
 
 printf "\n Old Config Archived in .env.old \n"
+
+printf "\n ------------------------- \n"
+
+printf "\n Emit mock server sent events stream(Requires arbitrage-apes-backend: ) \n"
+
+source .env && printf "\n %s \n" http://localhost:3000/api/stellar/mock/event/sse/"${DEPLOYED_ARBITRAGE_APES_CONTRACT}"
