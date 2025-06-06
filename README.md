@@ -349,10 +349,27 @@ Later in the tutorial, we will walk through how to display events in your UI.
 
 ----
 
-## NFT dapp Backend
+## NFT dapp Backend - Micro Indexer
 
 We will now create a backend to provide data for your UI.  We will take a flexible approach to building a dapp
 backend giving your working examples of various way to supply data to your client front-end.
+
+[Indexers](https://developers.stellar.org/docs/data/indexers) extract and transform raw blockchain data and present the data in a format
+that is more easily consumable by a front-end client.
+
+Indexers are generally provided as 3rd-party services.  The following nest.js service is a `micro-indexer` primarily built to consume
+contract events emitted by your contract and presents them to your front-end client in a streaming event-driven format.
+
+**Available Formats:**
+- ✅ Server Sent Events -> https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+  - http://localhost:3000/api/stellar/mock/event/sse/
+- Websocket -> TODO
+- GraphQL -> TODO
+- JSON REST API -> TODO
+
+**Mock Data vs Testnet:**
+- Mock data streams allow you to quickly iterate on your front-end UI without having to stage actually data on-chain.  This data will be generated according to the schema to ensure it works with live testnet data.
+- Testnet data streams will include the ability to invoke the `mint()` function to generate testnet data
 
 **Run locally**
 https://github.com/anataliocs/arbitrage-apes-backend
@@ -371,40 +388,41 @@ STELLAR_RPC_SERVER_URL=https://soroban-testnet.stellar.org
 pnpm start:dev
 ```
 
-Backend:
+**Backend:**
 - Using SSE
 - Moves complex code from front-end to backend
-- Push HTML code to front-end
+- Push JSON, HTML code, or React components or fragments to your front-end client
 
-Front-end -> Single index.html file
-```html
-<script type="text/javascript">
-    const eventSource = new EventSource('/sse');
-    eventSource.onmessage = ({ data }) => {
-      const message = document.createElement('li');
-      message.innerText = 'New message: ' + data;
-      document.body.appendChild(message);
-    }
-</script>
-```
+**Front-end -> Single HTML file**
+- Check out `mock-sse.html` or `mock-sse-by-contractid.html` for a working example
+- Requires running `arbitrage-apes-backend` micro-indexer on port `3000`
 
-Backend
+**Backend SSE Example**
+- This example uses RxJS to generate a stream of MessageEvents pushed to a front-end client
+- Example stream URL: http://localhost:3000/api/stellar/mock/event/sse/CC6GBNMVYR4SVUDWTIP7KTMGBQF22OJQFTBXHGZKE3LLJPBGIYXIIOL4
 ```
-  @Sse('sse')
-  sse(): Observable<MessageEvent> {
+  @Sse('sse/:contractId')
+  sse_by_contract_id(
+    @Param('contractId') contractId: string,
+  ): Observable<MessageEvent> {
     return interval(1000).pipe(
-      map((_) => ({ data: { hello: 'world' } }) as MessageEvent),
+      map(
+        this.stellarMockEventService.transformMessageEventWithContract(
+          contractId,
+        ),
+      ),
     );
   }
 ```
 
-You may have CORS issues on localhost.
+**CORS**
+CORS is setup on the server to allow for http://localhost:63342/ and http://localhost:63343/ you will have to add this CORS config.
 
-You can try opening Chrome in a sandbox with web security disabled:
+- Alternative: You can try opening Chrome in a sandbox with web security disabled:
 ```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome http://localhost:63342/stellar-arbitrage-apes-future-yacht-club/index.html?_ijt=q9fn6vaje10r5bcfgmcmafoo6p&_ij_reload=RELOAD_ON_SAVE --args --disable-web-security --user-data-dir="~/.chrome.dev.session/" --incognito --new-window
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome http://localhost:63342/stellar-arbitrage-apes-future-yacht-club/index.html?_ijt=q9fn6vaje10r5bcfgmcmafoo6p&_ij_reload=RELOAD_ON_SAVE \
+--args --disable-web-security --user-data-dir="~/.chrome.dev.session/" --incognito --new-window
 ```
-
 
 ----
 
@@ -425,26 +443,17 @@ Modify
 
 **Execute this command:**
 ```bash
-source .env && stellar contract invoke \
-    --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
-    --source $SOURCE_ACCOUNT_CLI_NAME \
-    -- \
-    mint \
-    --to $ARBITRAGE_APES_OWNER \
-	--token_id 132
+TODO
 ```
 
 ## Opinionated Front-end Client Creation
 
-The method of UI creation I'm using in this case is a template that is actively maintained, 500+ deployments, and full 
-test suite to ensure that static analysis is followed and test generation is successful and 218 github stars
+The method of UI creation is a template that is actively maintained, 500+ deployments, and full 
+test suite + static analysis with app generation test. 218 github stars.
 - https://nextjs-boilerplate-hadrysm.vercel.app/
 - https://github.com/hadrysm/nextjs-boilerplate
 
-If you preferred another UI framework, go ahead and build with whatever you prefer!
-
-Generate basic UI skeleton
-
+- Generates Next.js boilerplate basic UI
 
 ----
 
@@ -457,42 +466,37 @@ How data is stored is an important consideration!
 
 Unique key with which to store or retrieve data.
 
-```rust
-
+```
+TODO - Update this section
 ```
 
 - [Enums in Rust](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html) define an enumeration, a limited set
   of possible values
-- This `enum` defines a single possible variant of `Storage` keys of the type `Chat`
+- This `enum` defines a single possible variant of `Storage` keys
 - This custom data type acts as a key to look up a stored value
-- The `Chat` type is associated with a `u32`(unsigned 32-bit int)
 
 All together, this gives us a unique, named-spaced custom data type to function as a key
-to store and retrieve `ChatMessage` values from storage.
+to store and retrieve values from storage.
 
 Using the Data Key in the format `Namespace::Variant(Associated value)`:
 
-```rust
-
+```
+TODO
 ```
 
 **Storage Value Type Definition:**
 
-Defines the interface for storing data.
+Define the interface for storing data.
 
-```rust
-
+```
+TODO
 ```
 
 - [Structs in Rust](https://doc.rust-lang.org/book/ch05-01-defining-structs.html) define a type with multiple named
   associated values called **fields**
-- The name of the struct, `ChatMessage` is a type that describes the purpose of the data grouping
+- The name of the struct is a type that describes the purpose of the data grouping
 - Each field is defined in the format `name: Type`
 - This struct functions as an interface of key:value pairs that define an atomic piece of data to be stored
-- Field definitions:
-	- An `Address` type representing the author of the `ChatMessage`
-	- A `soroban_sdk::string` type representing the message contents
-	- A `u64` type representing the timestamp when the `ChatMessage` was sent
 
 > **⚠️ Warning**
 >
@@ -501,25 +505,21 @@ Defines the interface for storing data.
 >
 > Make sure you import the `soroban_sdk::{String}` type!
 
-**Instanciate a `ChatMessage` instance to store:**
-
-```rust
-
-```
+----
 
 #### Storing Soroban Data using the `Env` Interface
 
 How to store data on-chain:
 
-```rust
-
+```
+TODO
 ```
 
 **Storing data on-chain**
 
 - Your function definition will need to include a reference to the `Env` type
 - The [soroban_sdk::env](https://docs.rs/soroban-sdk/latest/soroban_sdk/struct.Env.html) type provides ways to interact
-  with the execution enviroment
+  with the execution environment
 	- **TL;DR;** Contracts talk to the Stellar network via the environment interface
 - The `env.storage.temporary().set` function allows for storing data on-chain with a limited lifespan
 	- Data that needs to
@@ -527,216 +527,8 @@ How to store data on-chain:
 	  into `persistent()` durability
 	- Check out the docs for help on choosing
 	  the [right storage durability](https://developers.stellar.org/docs/learn/encyclopedia/storage/persisting-data#best-practices)
-- The diamond notation `::<Storage, ChatMessage>` is an
-  optional [generic](https://doc.rust-lang.org/book/ch10-01-syntax.html) for type-safety
-	- Indicates the storage key will be of the type `Storage` and the stored value will be of the type `ChatMessage`
-- The statement `&Storage::Chat(next_index)` defines a key to store and retrieve on-chain data
-- The statement `&ChatMessage { author, message, timestamp: env.ledger().timestamp() }` defines the data to be stored
-
-### `send()` Function Auth
-
-**Auth**
-
-Review line 24 in the contract, `contracts/snapchain/src/lib.rs`
-
-**soroban_sdk::address::require_auth**
-
-The `require_auth` statement controls access to who can invoke this function.
-
-```rust
-
-```
-
-- Ensures the `Address` has authorized the current invocation(including all the invocation arguments)
-- Provided by the Soroban Rust SDK
-- Sensible built-in security
-
-## Invoking your Smart Contract
-
-Invoke your deployed contract `send()` function:
-
-```bash
-stellar contract invoke \
-    --id CBUMOJAEAPLQUCWVIM6HJH5XKXW5OP7CRVOOYMJYSTZ6GFDNA72O2QW6 \
-    --source alice2 \
-    -- \
-    send \
-    --author GDCJMCMYNDZ2FV6UMSEYRMUSCX53KCG2AWPBFQ24EA2FFYBCEDMFCBCV \
-    --message new-mesg-test2
-```
 
 ---
-
-## Using a Rpc Server to Look up `ChatMessage` Key Data
-
-**Path:**  `src/stellar.ts`
-
-`stellar.ts` provides an interface for calling a Stellar RPC server.
-We will use it to manage contract storage key data.
-It uses the [Stellar Javascript SDK](https://stellar.github.io/js-stellar-sdk/)
-
-### Contract Data Storage Keys
-
-Getting storage key index data and building objects to represent `ChatMessage` keys.
-
-**Get Next Index**
-
-Let's get the index sequentially, where we would store a new `ChatMessage`.
-
-This essentially functions as the length of the array of messages.
-
-**Example(index -> message):**
-
-* `0` -> `ChatMessage` 1
-* `1` -> `ChatMessage` 2
-* `2` -> `NextIndex`
-
-Getting next index:
-
-`src/stellar.ts`
-
-```typescript
-async function getNextIndex(): Promise<number> {
-    // Define the deployed contract on testnet
-	const snapchainContract = new Contract(networks.testnet.contractId)
-	// Retrieve on-chain data owned by the contract
-	const { entries } = await rpc.getLedgerEntries(snapchainContract.getFootprint())
-	// Find the storage entry representing the current index + 1
-	// i.e. Find the index that a new ChatMessage sequentially should be stored under
-	const nextIndex = entries[0].val
-	.contractData().val().instance().storage()
-		?.find((e) => scValToNative(e.key()) === 'INDEX');
-    // If there are no current ChatMessages, return 0
-	return nextIndex ? scValToNative(nextIndex.val()) : 0;
-}
-```
-
-**Chat Ledger Key Array**
-
-Create an array of storage keys(`Storage::Chat(u32)`) used to look up ChatMessage storage entries.
-
-`src/stellar.ts`
-
-```typescript
-function createChatLedgerKeys(latestIndex: number): xdr.LedgerKey[] {
-    // Create an array of LedgerKey entries to look up all ChatMessages
-    return Array.from({ length: latestIndex}, (_, i) => latestIndex - i).map((c) =>
-        // Create an XDR entry representing the key used to look up ChatMessage storage entries
-	    xdr.LedgerKey.contractData(
-            // Define the deployed contract, storage key, and storage type
-            new xdr.LedgerKeyContractData({
-                contract: new Address(networks.testnet.contractId).toScAddress(),
-                key: nativeToScVal([
-                    nativeToScVal('Chat', { type: 'symbol' }),
-                    nativeToScVal(c, { type: 'u32' }),
-                ]),
-                durability: xdr.ContractDataDurability.temporary(),
-            })
-        )
-    );
-}
-```
-
-- [XDR](https://developers.stellar.org/docs/learn/encyclopedia/data-format/xdr) is a binary format used to represent
-  on-chain externally like in a web app
-- [LedgerKeyContractData](https://developers.stellar.org/docs/data/apis/rpc/api-reference/methods/getLedgerEntries) XDR
-  objects are used to look up data on-chain that belongs to a contract
-- A ledger key for contract data consists of 3 parts
-	- The deployed contract ID
-	- The storage key consisting of
-		- The custom data type name. e.g. `Chat`
-		- The associated value. e.g. `u32`
-	- Durability:  Either temporary, persistent or instance
-
----
-
-## Fetch and Display `ChatMessage` Content
-
-`src/stellar.ts` was used to build an array of lookup keys. Now let's get the ChatMessage content
-and display it in the UI.
-
-**Path:**  `src/chitChat.ts`
-
-`chitChat.ts` gets chat message data and displays it
-
-### Fetch ChatMessage Contract Data
-
-Fetch chat message data for display in the UI.
-
-```typescript
-    async function fetchMessages() {
-
-	// Get array of ledger keys used to lookup ChatMessages
-    let possibleChats = createChatLedgerKeys(this.nextIndex - 1);
-    let entries: Api.LedgerEntryResult[] = []
-
-	// RPC limits 200 keys in a single request
-    if (possibleChats.length <= 200) {
-        // Pass in the Array of LedgerKeys retrieving chat messages
-        entries = (await rpc.getLedgerEntries(...possibleChats)).entries
-    } else {
-        // Paginate in chunks of 200 chat messages
-        while (possibleChats.length) {
-            let tempChats = possibleChats.slice(0, 200);
-            possibleChats = possibleChats.slice(200)
-            entries = entries.concat(entries, (await rpc.getLedgerEntries(...tempChats)).entries)
-        }
-    }
-
-    // Store retreived chat messages in Record<number, ChatMessage> array for display in UI
-    this.messages = {}
-    entries.forEach((e) => {
-        const chatIndex = scValToNative(e.key.contractData().key())[1]
-        const chatMessage: ChatMessage = scValToNative(e.val.contractData().val())
-        this.messages[chatIndex] = chatMessage
-    })
-}
-```
-
-- Lookup `ChatMessage` entries using the `getLedgerEntries` rpc call
-- Paginate entries in chunks of 200
-- Transform rpc server response objects into `ChatMessage` objects for display in UI
-
----
-
-## Front-end Display of ChatMessages
-
-Review the following file:
-`src/chitChat.ts`
-
-Generate HTML markup code to display formatted chat message data:
-
-```typescript
-function renderMessage({author, message, timestamp}: ChatMessage): string {
-    return `
-        <article class="chat-card">
-            <header><nav>
-                <small>${truncate(author)}</small>
-                <small>${new Date(Number(timestamp) * 1_000).toLocaleString()}</small>
-            </nav></header>
-            <p>${message}</p>
-        </article>
-    `
-}
-```
-
-Insert rendered markup for each chat message into the placeholder element:
-
-```typescript
-    renderMessages() {
-        let placeholder = ''
-        Object.entries(this.messages)
-            .forEach(([_, chatMessage]) => {
-                placeholder += renderMessage(chatMessage)
-            })
-        this.element.innerHTML = placeholder
-    }
-```
-
----
-
-For more details on how Passkeys and Launchtube work check out the example
-repo: https://github.com/kalepail/smart-stellar-demo
 
 ## 👀 Want to learn more?
 
