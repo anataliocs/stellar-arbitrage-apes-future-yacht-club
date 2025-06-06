@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 set -e pipefail
 
 # Add Stellar CLI to $PATH

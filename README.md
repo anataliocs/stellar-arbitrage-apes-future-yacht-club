@@ -237,7 +237,7 @@ step4_verify
 ```
 
 **Review**
-- Your .env file with everything you need to build a dapp around your Open Zeppelin NFT Contract
+- Your `.env` file with everything you need to build a dapp around your Open Zeppelin NFT Contract
 - Built and deployed your contract and stored the results in `contract-address.log` and `contract-build.log`
 - Deployed your contract bindings and use `npm link` which add the package `node_modules`
 
@@ -276,7 +276,7 @@ source .env && stellar events --id $DEPLOYED_ARBITRAGE_APES_CONTRACT \
 > - TODO Store emitted events in JSON format for use in test mocking and cache pre-warm
 
 **Default Output type(pretty):**
-```
+```terminaloutput
 Event 0005183355511390208-0000000001 [CONTRACT]:
   Ledger:   1206844 (closed at 2025-05-28T15:12:48Z)
   Contract: CANPLB5YZIPWR764C6TUYYHF5RJPIG232O3YLKCE5KV5OBWKRGGTCAGI

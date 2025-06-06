@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 set -e
 
 clear
@@ -14,7 +14,7 @@ echo ""
 echo "  📖 Stellar CLI Manual(cmd+click) 🔗 https://developers.stellar.org/docs/tools/cli/stellar-cli"
 echo "  👩‍🔬 Stellar Lab(cmd+click) 🔗 https://lab.stellar.org/"
 echo ""
-echo "  Welcome to Arbitrage Apes OpenZeppelin Contract"
+echo "  OpenZeppelin Contracts"
 echo "  Join our Discord:  https://discord.gg/stellardev"
 echo "  Stella: AI chat bot for stellar dev questions https://discord.com/channels/897514728459468821/1265827786111586344"
 echo "  CLI GitHub AI Copilot:  gh copilot --help"
