@@ -27,7 +27,7 @@
     "80": {
       "label": "http",
       "onAutoForward": "openPreview",
-      elevateIfNeeded: true
+      "elevateIfNeeded": true
     },
     "5173": {
       "label": "vite",
