@@ -56,14 +56,14 @@ echo "ARBITRAGE_APES_LAUNCHTUBE_TOKEN=$launchtube_token" >> .env
 printf "\n Launchtube Token: %s \n" "$launchtube_token"
 
 printf "\n Set client directory \n"
-client_directory="$ARBITRAGE_APES_ROOT/client/apps/$ARBITRAGE_APES_ROOT"
+client_directory="$ARBITRAGE_APES_ROOT/client/apps/"
 echo "ARBITRAGE_APES_CLIENT_ROOT=$client_directory" >> .env
 
 printf "\n Contract bindings are typescript definitions you can use to interact with your contract \n"
 printf "\n ------------------------- \n"
 
 printf "\n ------------------------- \n"
-cat $ARBITRAGE_APES_CONTRACT_BINDINGS/src/index.ts
+printf "\n Execute this command to view the contract bindings: %s \n" "cat $ARBITRAGE_APES_CONTRACT_BINDINGS/src/index.ts"
 printf "\n ------------------------- \n"
 
 
@@ -82,6 +82,12 @@ printf "\n Old Config Archived in .env.old \n"
 
 printf "\n ------------------------- \n"
 
-printf "\n Emit mock server sent events stream(Requires arbitrage-apes-backend: ) \n"
+printf "\n Setup your front-end client and/or your micro-indexer back-end \n"
+printf "\n ------------------------- \n"
 
+printf "\n Setup your micro-indexer back-end \n"
+printf "\n Copy your .env file over to your arbitrage-apes-backend project root directory \n"
+printf "\n Execute this command to link the contract bindings: %s \n" "source .env && pnpm link "$ARBITRAGE_APES_ROOT/$ARBITRAGE_APES_CONTRACT_BINDINGS" && pnpm install"
+
+printf "\n Emit mock server sent events stream(Requires arbitrage-apes-backend: See README for more info) \n"
 source .env && printf "\n %s \n" http://localhost:3000/api/stellar/mock/event/sse/"${DEPLOYED_ARBITRAGE_APES_CONTRACT}"
