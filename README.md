@@ -7,7 +7,7 @@
 Fully Audited Open Zeppelin NFT Contracts now on ✨ [Stellar Network](https://developers.stellar.org/)
 with [smart wallets](https://developers.stellar.org/docs/build/apps/smart-wallets)
 powered by Stellar Dev Tools
-like the **Stellar CLI**, the **Stellar Javascript SDK**, **Passkey Kit** and **Launchtube**.
+like the **Stellar CLI** and the **Stellar Javascript SDK**
 
 Audited smart contracts add another layer of security and safety to the Soroban ecosystem which is already built 
 from the ground up with a security mindset.

@@ -2,8 +2,13 @@
 
 set -e
 
-printf "\n This script is repeatedable and reusable to run through this setup process again \n"
+printf "\n Executing Step 1 of the Setup and Build Process \n"
+printf "\n ------------------------- \n"
+
+printf "\n This script is repeatable and reusable to run through this setup process again \n"
 printf "\n Each execution will give you a unique configuration \n"
+
+printf "\n ------------------------- \n"
 
 if test -f ".env"; then
 printf "\n Removing previous SOURCE_ACCOUNT_CLI_NAME and archiving to .env.old \n"
@@ -18,13 +23,14 @@ sed -i ".old" '/^TESTNET_RPC_URL=.*$/d' .env
 printf "\n Removing previous TESTNET_NETWORK_PASSPHRASE and archiving to .env.old \n"
 sed -i ".old" '/^TESTNET_NETWORK_PASSPHRASE=.*$/d' .env
 
+printf "\n Removing previous ARBITRAGE_APES_ROOT and archiving to .env.old \n"
+sed -i ".old" '/^ARBITRAGE_APES_ROOT=.*$/d' .env
+
 else
   touch .env
 fi
 
-printf "\n Setting Project Root in .env \n Executing command: %s \n" \
-"echo 'ARBITRAGE_APES_ROOT=$PWD' >> .env"
-echo "ARBITRAGE_APES_ROOT=$PWD" >> .env
+project_root="$PWD"
 
 default_contract_name="arbitrage-apes"
 
@@ -51,6 +57,13 @@ printf "\n Executing:  stellar keys address %s \n" "$default_source_account"
 stellar keys address $default_source_account
 
 stellar keys address $default_source_account | xargs -0 -I {} echo "ARBITRAGE_APES_OWNER={}" |tee .env && source .env
+
+printf "\n Detected project root: %s \n" "$project_root"
+
+printf "\n Setting Project Root in .env \n Executing command: %s \n" \
+    "echo 'ARBITRAGE_APES_ROOT=$project_root' >> .env"
+echo "export ARBITRAGE_APES_ROOT=$project_root"
+echo "ARBITRAGE_APES_ROOT=$project_root" >> .env
 
 printf "\n Exporting %s \n" "ARBITRAGE_APES_OWNER"
 echo "export ARBITRAGE_APES_OWNER=${ARBITRAGE_APES_OWNER}"
