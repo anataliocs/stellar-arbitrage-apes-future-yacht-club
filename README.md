@@ -216,6 +216,19 @@ step3_verify
 - Sets Deployed contract address to DEPLOYED_ARBITRAGE_APES_CONTRACT
 - Sets your launch-tube token in your .env as `ARBITRAGE_APES_LAUNCHTUBE_TOKEN`
 
+> pnpm link vs file protocol:  
+> https://pnpm.io/cli/link#whats-the-difference-between-pnpm-link-and-using-the-file-protocol
+
+We have included `packages` in our include statement in `tsconfig.json`
+```json
+{
+  "include": [
+    "src",
+    "packages"
+  ]
+}
+```
+
 ```bash
 alias step4_auto="./init/step4_auto.sh" && alias step4_print="./init/step4_manual.sh" && \
 alias step4_verify="./init/step4_verify.sh"
@@ -306,7 +319,19 @@ Event 0005183355511390208-0000000001 [CONTRACT]:
 > - TODO Provide utility helper using Stellar CLI for decoding XDR in event
 > - Show how to view/decode events on Stellar lab
 
-Later in the tutorial, we will walk through how to display events in your UI.
+## Invoking your Contract with the Javascript SDK
+
+We showed you how to use the Stellar CLI to invoke your contract, now let's do it with the
+[Javascript SDK](https://stellar.github.io/js-stellar-sdk/).
+
+**Parameters:**
+- contract_id (optional) - Deployed contract ID
+- SOURCE_KEYPAIR (optional)
+
+Execute:
+```bash
+pnpx tsx use_contract_bindings.ts [contract_id] [SOURCE_KEYPAIR]
+```
 
 ----
 
