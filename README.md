@@ -443,7 +443,8 @@ pnpm start:dev
 **CORS**
 CORS is setup on the server to allow for http://localhost:63342/ and http://localhost:63343/ you will have to add this CORS config.
 
-- Alternative: You can try opening Chrome in a sandbox with web security disabled:
+- Last Resort: You can try opening Chrome in a sandbox with web security disabled:
+- This approach is NOT recommended 
 ```bash
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome http://localhost:63342/stellar-arbitrage-apes-future-yacht-club/index.html?_ijt=q9fn6vaje10r5bcfgmcmafoo6p&_ij_reload=RELOAD_ON_SAVE \
 --args --disable-web-security --user-data-dir="~/.chrome.dev.session/" --incognito --new-window
@@ -482,10 +483,12 @@ test suite + static analysis with app generation test. 218 github stars.
 
 ----
 
-
-### Storing Data
+## Storing Data
 
 How data is stored is an important consideration!
+
+Learn more about Stellar Smart Contract Storage in the following file:
+`Learning_Stellar_Smart_Contract_Storage.md`
 
 **Storage Key Definition:**
 
@@ -554,6 +557,19 @@ TODO
 	  the [right storage durability](https://developers.stellar.org/docs/learn/encyclopedia/storage/persisting-data#best-practices)
 
 ---
+
+## Contract Source Validation
+
+Build verification
+
+TODO - `.github/workflows/release.yml`
+
+- https://stellar.expert/explorer/public/contract/validation
+- [Contract Source Validation SEP #1573](https://github.com/orgs/stellar/discussions/1573)
+- https://lab.stellar.org/smart-contracts/contract-explorer
+
+
+----
 
 ## 👀 Want to learn more?
 

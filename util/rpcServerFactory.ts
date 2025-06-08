@@ -75,8 +75,8 @@ export async function sign (
     options?: {}
 ): Promise<Signed> {
 
-    console.log (xdr);
-    console.log (options);
+    console.log ("Transaction XDR: " + xdr);
+    console.log ("Options: " + options);
     //TODO default signer
 
     return new Promise<Signed> ((resolve) => {
