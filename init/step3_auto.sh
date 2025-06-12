@@ -18,7 +18,7 @@ fi
 source .env
 
 deploy_command="source .env && stellar contract deploy --alias arbitrage-apes-contract \
---wasm target/wasm32v1-none/release/arbitrage_apes.wasm \
+--wasm $ARBITRAGE_APES_WASM \
 --source $SOURCE_ACCOUNT_CLI_NAME \
 --network testnet \
 -- --owner $ARBITRAGE_APES_OWNER"
@@ -26,7 +26,7 @@ deploy_command="source .env && stellar contract deploy --alias arbitrage-apes-co
 printf "\n Executing command: %s \n" "$deploy_command"
 
 source .env && stellar contract deploy --alias arbitrage-apes-contract  \
---wasm target/wasm32v1-none/release/arbitrage_apes.wasm \
+--wasm "$ARBITRAGE_APES_WASM" \
 --source "$SOURCE_ACCOUNT_CLI_NAME" \
 --network testnet \
 -- --owner "$ARBITRAGE_APES_OWNER" |tee contract-address.log

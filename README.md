@@ -29,15 +29,15 @@ Open Zeppelin based NFT `NonFungibleBurnable` for token gating access to APIs in
 **Path:** `contracts/arbitrage-apes`
 
 
-**Next Step:**  Choose Devcontainers or Local Setup
+**Next Step:** Choose Devcontainers or Local Setup
 
 ----
 
 ## How to start with Devcontainers
  
-Read the [Github Docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
+Read the [GitHub Docs](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/setting-up-your-repository/facilitating-quick-creation-and-resumption-of-codespaces)
 
-- Option 1: Create [Github Codespace from the Github UI](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository)
+- Option 1: Create [GitHub Codespace from the GitHub UI](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository)
 - Option 2: Use a template string:  `https://codespaces.new/OWNER/REPO-NAME`
   - Replace `OWNER` with your Github name
   - Replace `REPO-NAME` with whatever you named this repo
@@ -86,7 +86,7 @@ Upgrading your deployed contract
 
 - Set CLI to use testnet by default
 - Generate and fund Testnet key
-- Set default source account for future CLI Commands
+- Set the default source account for future CLI Commands
 - Store in `.env` as `ARBITRAGE_APES_OWNER`
 - Set standard contract name in `.env` to be used as a CLI alias and package for contract bindings
 - Set your project root
