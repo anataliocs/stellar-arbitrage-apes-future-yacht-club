@@ -5,7 +5,7 @@ members = [
 ]
 
 [workspace.dependencies]
-soroban-sdk = "22.0.8"
+soroban-sdk = "22.0.9"
 stellar-ownable = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
 stellar-non-fungible = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
 stellar-default-impl-macro = { git = "https://github.com/OpenZeppelin/stellar-contracts" }
